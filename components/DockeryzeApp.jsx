@@ -27,7 +27,7 @@ const TECH_BADGES = [
   '🧹 Shredder',
 ];
 
-export default function DevLaunchApp({ session }) {
+export default function DockeryzeApp({ session }) {
   const [file, setFile] = useState(null);
   const [status, setStatus] = useState('idle'); // idle | uploading | extracting | scanning | searching | analyzing | compiling | success | error
   const [errorMessage, setErrorMessage] = useState('');

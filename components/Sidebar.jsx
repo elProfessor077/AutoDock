@@ -28,7 +28,7 @@ export default function Sidebar({ session, activePath }) {
         <div className="sidebar-brand">
           <a href="/" className="sidebar-logo">
             <div className="nav-logo-icon" aria-hidden="true">
-              <img src="/devlaunch-icon.png?v=2" alt="" width={28} height={28} style={{ borderRadius: '50%', objectFit: 'cover' }} />
+              <img src="/dockeryze-icon.png?v=2" alt="" width={28} height={28} style={{ borderRadius: '50%', objectFit: 'cover' }} />
             </div>
             <span className="nav-logo-text">Dockeryze</span>
           </a>

@@ -20,7 +20,7 @@ export default function SignInPage() {
           {/* Logo */}
           <div className="signin-header">
             <div className="nav-logo-icon" aria-hidden="true" style={{ width: '52px', height: '52px', borderRadius: '50%', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <img src="/devlaunch-icon.png?v=2" alt="" width={52} height={52} style={{ borderRadius: '50%', objectFit: 'cover' }} />
+              <img src="/dockeryze-icon.png?v=2" alt="" width={52} height={52} style={{ borderRadius: '50%', objectFit: 'cover' }} />
             </div>
             <h1 className="signin-title">Welcome to Dockeryze</h1>
             <p className="signin-subtitle">
