@@ -1,0 +1,16 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: devlaunch-ai
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env.local
+    environment:
+      - PORT=3000
+      - AUTH_TRUST_HOST=true
+      - AUTH_URL=http://localhost:3000
+      - NEXTAUTH_URL=http://localhost:3000
+    restart: unless-stopped
