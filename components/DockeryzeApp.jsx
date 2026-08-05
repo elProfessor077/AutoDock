@@ -13,18 +13,21 @@ import { saveHistoryEntry } from './HistoryList';
 import AuthButton from './AuthButton';
 import Sidebar from './Sidebar';
 
+import { NodeIcon, PythonIcon, GoIcon, RustIcon, JavaIcon, RubyIcon, PhpIcon, DockerIcon, GeminiIcon, RagIcon, ShieldIcon, ShredderIcon } from './EcosystemIcons';
+
 const TECH_BADGES = [
-  '🟢 Node.js',
-  '🐍 Python',
-  '🐹 Go',
-  '💎 Ruby',
-  '🦀 Rust',
-  '☕ Java',
-  '🤖 Gemini 2.0',
-  '📚 RAG Vector DB',
-  '🐳 Docker',
-  '🛡️ Zip Slip Guard',
-  '🧹 Shredder',
+  { label: 'Node.js', Icon: NodeIcon },
+  { label: 'Python', Icon: PythonIcon },
+  { label: 'Go', Icon: GoIcon },
+  { label: 'Ruby', Icon: RubyIcon },
+  { label: 'Rust', Icon: RustIcon },
+  { label: 'Java', Icon: JavaIcon },
+  { label: 'PHP', Icon: PhpIcon },
+  { label: 'Docker', Icon: DockerIcon },
+  { label: 'Gemini 2.0', Icon: GeminiIcon },
+  { label: 'RAG Vector DB', Icon: RagIcon },
+  { label: 'Zip Slip Guard', Icon: ShieldIcon },
+  { label: 'Shredder', Icon: ShredderIcon },
 ];
 
 export default function DockeryzeApp({ session }) {
@@ -250,7 +253,10 @@ export default function DockeryzeApp({ session }) {
             <div className="tech-marquee-track">
               {/* Duplicate the set twice for seamless infinite scroll */}
               {[...TECH_BADGES, ...TECH_BADGES].map((badge, i) => (
-                <span key={`${badge}-${i}`} className="tech-badge" role="listitem">{badge}</span>
+                <span key={`${badge.label}-${i}`} className="tech-badge" role="listitem">
+                  <badge.Icon size={16} />
+                  <span>{badge.label}</span>
+                </span>
               ))}
             </div>
           </div>

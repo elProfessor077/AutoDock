@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { EcosystemIcon } from './EcosystemIcons';
 
 const HISTORY_KEY = 'dockeryze-history';
 
@@ -140,8 +141,8 @@ export default function HistoryList() {
           <div className="history-entry-meta">
             {entry.ecosystem && (
               <span className="history-eco-tag" style={{ borderColor: getEcosystemColor(entry.ecosystem) }}>
-                <span className="history-eco-dot" style={{ background: getEcosystemColor(entry.ecosystem) }} />
-                {entry.ecosystem}
+                <EcosystemIcon name={entry.ecosystem} size={14} />
+                <span style={{ textTransform: 'capitalize' }}>{entry.ecosystem}</span>
               </span>
             )}
             {entry.runtime && (

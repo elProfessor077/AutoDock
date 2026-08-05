@@ -1,92 +1,59 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
+import Image from 'next/image';
 import AuthButton from './AuthButton';
+import { useTheme } from './ThemeProvider';
 
 export default function Sidebar({ session, activePath }) {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const { theme, toggleTheme } = useTheme();
+
+  const navLinks = [
+    { href: '/', label: 'Home', icon: '🏠' },
+    { href: '/workspace', label: 'Workspace', icon: '🚀' },
+    { href: '/folder-to-zip', label: 'Folder to ZIP', icon: '📦' },
+    { href: '/how-it-works', label: 'How It Works', icon: '⚙️' },
+    { href: '/security', label: 'Security', icon: '🛡️' },
+    { href: '/history', label: 'History', icon: '📜' },
+    { href: '/docs', label: 'Docs', icon: '📚' },
+  ];
 
   return (
-    <>
-      {/* Mobile Toggle Button */}
-      <button 
-        className="sidebar-toggle-btn" 
-        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-        aria-label="Toggle Navigation Sidebar"
-      >
-        ☰
-      </button>
-
-      {/* Sidebar Overlay for Mobile */}
-      <div 
-        className={`sidebar-overlay ${isSidebarOpen ? 'open' : ''}`} 
-        onClick={() => setIsSidebarOpen(false)}
-      />
-
-      {/* Left Sidebar Navigation */}
-      <aside className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
-        <div className="sidebar-brand">
-          <a href="/" className="sidebar-logo">
+    <header className="top-header">
+      <div className="top-header-container">
+        <div className="top-header-left">
+          <a href="/" className="top-header-logo">
             <div className="nav-logo-icon" aria-hidden="true">
-              <img src="/dockeryze-icon.png?v=2" alt="" width={28} height={28} style={{ borderRadius: '50%', objectFit: 'cover' }} />
+              <Image
+                src="/dockeryze-icon.png"
+                alt="Dockeryze Logo"
+                width={26}
+                height={26}
+                style={{ borderRadius: '50%', objectFit: 'cover' }}
+                priority
+              />
             </div>
             <span className="nav-logo-text">Dockeryze</span>
           </a>
-          <span className="nav-badge" style={{ alignSelf: 'flex-start' }}>v2.0</span>
+          <span className="nav-badge">v2.0</span>
         </div>
 
-        <nav className="sidebar-nav">
-          <a 
-            href="/" 
-            className={`sidebar-link ${activePath === '/' ? 'active' : ''}`}
-          >
-            <span>🏠</span> Home
-          </a>
-          <a 
-            href="/workspace" 
-            className={`sidebar-link ${activePath === '/workspace' ? 'active' : ''}`}
-          >
-            <span>🚀</span> Workspace
-          </a>
-          <a 
-            href="/folder-to-zip" 
-            className={`sidebar-link ${activePath === '/folder-to-zip' ? 'active' : ''}`}
-          >
-            <span>📦</span> Folder to ZIP
-          </a>
-
-          <div className="sidebar-divider-line" />
-
-          <a 
-            href="/how-it-works" 
-            className={`sidebar-link ${activePath === '/how-it-works' ? 'active' : ''}`}
-          >
-            <span>⚙️</span> How It Works
-          </a>
-          <a 
-            href="/security" 
-            className={`sidebar-link ${activePath === '/security' ? 'active' : ''}`}
-          >
-            <span>🛡️</span> Security
-          </a>
-          <a 
-            href="/history" 
-            className={`sidebar-link ${activePath === '/history' ? 'active' : ''}`}
-          >
-            <span>📜</span> History
-          </a>
-          <a 
-            href="/docs" 
-            className={`sidebar-link ${activePath === '/docs' ? 'active' : ''}`}
-          >
-            <span>📚</span> Docs
-          </a>
+        <nav className="top-header-nav">
+          {navLinks.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className={`top-header-link ${activePath === link.href ? 'active' : ''}`}
+            >
+              <span>{link.icon}</span> {link.label}
+            </a>
+          ))}
         </nav>
 
-        <div className="sidebar-footer">
+        <div className="top-header-right">
           <AuthButton session={session} />
         </div>
-      </aside>
-    </>
+      </div>
+    </header>
   );
 }

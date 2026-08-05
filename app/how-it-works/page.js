@@ -26,12 +26,15 @@ export default async function HowItWorksPage() {
       <div className="main-content-layout">
         <main className="app-container" id="main-content">
           <section className="hero" aria-labelledby="how-it-works-title" style={{ marginBottom: '24px' }}>
+            <div className="hero-eyebrow">
+              <span className="dot" />
+              <span>PIPELINE ARCHITECTURE</span>
+            </div>
             <h1 id="how-it-works-title" className="hero-title">
-              How <span className="gradient-text">Dockeryze</span> Works
+              Under the Hood of <span className="gradient-text">Dockeryze</span>
             </h1>
             <p className="hero-subtitle">
-              From zip upload to production-ready containers — powered by
-              AI analysis, RAG vector search, and battle-tested templates.
+              From repository submission to production-hardened containers — discover our 3-stage intelligence pipeline powered by manifest scanning, RAG vector retrieval, and Gemini 2.0.
             </p>
           </section>
 

@@ -1,8 +1,9 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import Sidebar from './Sidebar';
-import AuthButton from './AuthButton';
+import { NodeIcon, PythonIcon, GoIcon, RustIcon, JavaIcon, RubyIcon, PhpIcon, DockerIcon, GeminiIcon, RagIcon, ShieldIcon } from './EcosystemIcons';
 
 const QUICK_ACTIONS = [
   {
@@ -62,24 +63,137 @@ const QUICK_ACTIONS = [
 ];
 
 const SUPPORTED_ECOSYSTEMS = [
-  { name: 'Node.js', icon: '🟢', color: '#a3be8c' },
-  { name: 'Python', icon: '🐍', color: '#ebcb8b' },
-  { name: 'Go', icon: '🐹', color: '#88c0d0' },
-  { name: 'Ruby', icon: '💎', color: '#bf616a' },
-  { name: 'Rust', icon: '🦀', color: '#d08770' },
-  { name: 'Java', icon: '☕', color: '#81a1c1' },
+  { name: 'Node.js', Icon: NodeIcon, color: '#339933' },
+  { name: 'Python', Icon: PythonIcon, color: '#3776AB' },
+  { name: 'Go', Icon: GoIcon, color: '#00ADD8' },
+  { name: 'Rust', Icon: RustIcon, color: '#DEA584' },
+  { name: 'Java', Icon: JavaIcon, color: '#5382A1' },
+  { name: 'Ruby', Icon: RubyIcon, color: '#CC342D' },
+  { name: 'PHP', Icon: PhpIcon, color: '#777BB4' },
+  { name: 'Docker', Icon: DockerIcon, color: '#2496ED' },
 ];
 
 const STATS = [
-  { label: 'Ecosystems', value: '6+', icon: '🌍' },
+  { label: 'Ecosystems', value: '7+', icon: '🌍' },
   { label: 'RAG Recipes', value: '150+', icon: '📚' },
   { label: 'Avg Speed', value: '<8s', icon: '⚡' },
   { label: 'AI Model', value: 'Gemini 2.0', icon: '🤖' },
 ];
 
+const DEMO_PRESETS = [
+  {
+    id: 'node-postgres',
+    name: 'Node.js + PostgreSQL',
+    Icon: NodeIcon,
+    dockerfile: `# Multi-stage Node.js 20 LTS Production Build
+FROM node:20-alpine AS builder
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --only=production
+COPY . .
+RUN npm run build
+
+FROM node:20-alpine AS runner
+WORKDIR /app
+ENV NODE_ENV=production
+COPY --from=builder /app/package*.json ./
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/dist ./dist
+USER node
+EXPOSE 3000
+CMD ["node", "dist/index.js"]`,
+    compose: `version: '3.8'
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgres://postgres:secret@db:5432/appdb
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_PASSWORD=secret
+      - POSTGRES_DB=appdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:`
+  },
+  {
+    id: 'python-fastapi',
+    name: 'Python FastAPI + Redis',
+    Icon: PythonIcon,
+    dockerfile: `# Multi-stage Python 3.11 Slim Production Build
+FROM python:3.11-slim AS builder
+WORKDIR /app
+RUN python -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+FROM python:3.11-slim AS runner
+WORKDIR /app
+COPY --from=builder /opt/venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+COPY . .
+EXPOSE 8000
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]`,
+    compose: `version: '3.8'
+services:
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - REDIS_URL=redis://cache:6379/0
+    depends_on:
+      - cache
+
+  cache:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"`
+  },
+  {
+    id: 'go-microservice',
+    name: 'Go Microservice',
+    Icon: GoIcon,
+    dockerfile: `# Ultra-compact Go 1.22 Scratch Build
+FROM golang:1.22-alpine AS builder
+WORKDIR /app
+COPY go.mod go.sum ./
+RUN go mod download
+COPY . .
+RUN CGO_ENABLED=0 GOOS=linux go build -o server .
+
+FROM scratch
+COPY --from=builder /app/server /server
+EXPOSE 8080
+ENTRYPOINT ["/server"]`,
+    compose: `version: '3.8'
+services:
+  api:
+    build: .
+    ports:
+      - "8080:8080"
+    restart: unless-stopped`
+  }
+];
+
 export default function HomePage({ session }) {
   const [greeting, setGreeting] = useState('');
   const [currentTime, setCurrentTime] = useState('');
+  const [activePreset, setActivePreset] = useState(DEMO_PRESETS[0]);
+  const [activeTab, setActiveTab] = useState('dockerfile');
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     const updateTime = () => {
@@ -104,6 +218,13 @@ export default function HomePage({ session }) {
 
   const userName = session?.user?.name || session?.user?.email?.split('@')[0] || 'Developer';
 
+  const handleCopy = () => {
+    const textToCopy = activeTab === 'dockerfile' ? activePreset.dockerfile : activePreset.compose;
+    navigator.clipboard.writeText(textToCopy);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
     <div className="sidebar-layout">
       {/* Moving Ambient Background Orbs */}
@@ -124,10 +245,14 @@ export default function HomePage({ session }) {
             <div className="home-hero-greeting">
               <div className="home-hero-avatar-ring">
                 {session?.user?.image ? (
-                  <img
+                  <Image
                     src={session.user.image}
                     alt={userName}
+                    width={48}
+                    height={48}
                     className="home-hero-avatar"
+                    priority
+                    unoptimized
                   />
                 ) : (
                   <div className="home-hero-avatar-placeholder">
@@ -137,12 +262,15 @@ export default function HomePage({ session }) {
                 <div className="home-hero-status-dot" aria-label="Online" />
               </div>
               <div className="home-hero-text">
-                <p className="home-hero-time">{currentTime}</p>
+                <div className="hero-eyebrow" style={{ marginBottom: '8px' }}>
+                  <span className="dot" />
+                  <span>PLATFORM ACTIVE · GEMINI 2.0 + RAG VECTOR ENGINE</span>
+                </div>
                 <h1 id="home-hero-title" className="home-hero-title">
                   {greeting}, <span className="gradient-text">{userName}</span>
                 </h1>
                 <p className="home-hero-subtitle">
-                  Welcome to Dockeryze — your AI-powered containerization engine.
+                  Welcome to Dockeryze — your AI-powered containerization engine for instant Docker &amp; Compose blueprints.
                 </p>
               </div>
             </div>
@@ -200,11 +328,99 @@ export default function HomePage({ session }) {
                   className="home-ecosystem-chip"
                   style={{ '--eco-color': eco.color }}
                 >
-                  <span className="home-ecosystem-icon">{eco.icon}</span>
+                  <span className="home-ecosystem-icon">
+                    <eco.Icon size={20} />
+                  </span>
                   <span className="home-ecosystem-name">{eco.name}</span>
                   <div className="home-ecosystem-glow" aria-hidden="true" />
                 </div>
               ))}
+            </div>
+          </section>
+
+          {/* Interactive Live Blueprint Demo Preview */}
+          <section className="home-section" aria-label="Live Interactive Blueprint Demo">
+            <h2 className="home-section-title">
+              ⚡ Interactive Live Blueprint Demo
+            </h2>
+            <div className="glass-card demo-card">
+              <div className="demo-header">
+                <div className="demo-presets-row">
+                  {DEMO_PRESETS.map((preset) => {
+                    const PresetIcon = preset.Icon;
+                    return (
+                      <button
+                        key={preset.id}
+                        type="button"
+                        className={`demo-preset-btn ${activePreset.id === preset.id ? 'active' : ''}`}
+                        onClick={() => setActivePreset(preset)}
+                      >
+                        <PresetIcon size={16} />
+                        <span>{preset.name}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+
+                <div className="demo-controls-row">
+                  <div className="demo-tabs">
+                    <button
+                      type="button"
+                      className={`demo-tab ${activeTab === 'dockerfile' ? 'active' : ''}`}
+                      onClick={() => setActiveTab('dockerfile')}
+                    >
+                      Dockerfile
+                    </button>
+                    <button
+                      type="button"
+                      className={`demo-tab ${activeTab === 'compose' ? 'active' : ''}`}
+                      onClick={() => setActiveTab('compose')}
+                    >
+                      docker-compose.yml
+                    </button>
+                  </div>
+
+                  <button type="button" className="demo-copy-btn" onClick={handleCopy}>
+                    {copied ? '✅ Copied!' : '📋 Copy Code'}
+                  </button>
+                </div>
+              </div>
+
+              <div className="demo-code-container">
+                <pre className="demo-code-block">
+                  <code>{activeTab === 'dockerfile' ? activePreset.dockerfile : activePreset.compose}</code>
+                </pre>
+              </div>
+            </div>
+          </section>
+
+          {/* Efficiency Benchmark Comparison */}
+          <section className="home-section" aria-label="Performance Benchmark">
+            <h2 className="home-section-title">📊 Efficiency Comparison</h2>
+            <div className="glass-card benchmark-card">
+              <div className="benchmark-grid">
+                <div className="benchmark-column traditional">
+                  <div className="benchmark-badge error">Traditional Manual Setup</div>
+                  <div className="benchmark-stat">45 Mins</div>
+                  <p className="benchmark-desc">Manual configuration writing, trial &amp; error, outdated base tags, security risks.</p>
+                  <div className="benchmark-bar-wrap">
+                    <div className="benchmark-bar traditional-bar" style={{ width: '90%' }} />
+                  </div>
+                </div>
+
+                <div className="benchmark-divider">
+                  <span>VS</span>
+                </div>
+
+                <div className="benchmark-column dockeryze">
+                  <div className="benchmark-badge success">Dockeryze AI Engine</div>
+                  <div className="benchmark-stat">&lt; 8 Seconds</div>
+                  <p className="benchmark-desc">Manifest scanning, active RAG LTS recipe matching, multi-stage Alpine builds.</p>
+                  <div className="benchmark-bar-wrap">
+                    <div className="benchmark-bar dockeryze-bar" style={{ width: '15%' }} />
+                  </div>
+                </div>
+              </div>
             </div>
           </section>
 
@@ -213,9 +429,9 @@ export default function HomePage({ session }) {
             <div className="home-cta-content">
               <div className="home-cta-icon">🐳</div>
               <div className="home-cta-text">
-                <h3 className="home-cta-title">Ready to containerize?</h3>
+                <h3 className="home-cta-title">Ready to containerize your project?</h3>
                 <p className="home-cta-desc">
-                  Drop your project archive and get production-ready Docker blueprints in seconds.
+                  Drop your repository ZIP archive and get production-ready Docker blueprints in seconds.
                 </p>
               </div>
             </div>

@@ -26,12 +26,15 @@ export default async function SecurityPage() {
       <div className="main-content-layout">
         <main className="app-container" id="main-content">
           <section className="hero" aria-labelledby="security-page-title" style={{ marginBottom: '24px' }}>
+            <div className="hero-eyebrow">
+              <span className="dot" />
+              <span>ISOLATION & PRIVACY SHIELD</span>
+            </div>
             <h1 id="security-page-title" className="hero-title">
-              The <span className="gradient-text">Security Shield</span>
+              Multi-Layered <span className="gradient-text">Security Architecture</span>
             </h1>
             <p className="hero-subtitle">
-              Every upload is processed through multiple hardened security layers.
-              No data is persisted — everything is ephemeral by design.
+              Every archive submission is processed through active Zip Slip path traversal defenses and ephemeral memory shredders. No project data or source code is ever persisted.
             </p>
           </section>
 

@@ -458,15 +458,15 @@ export default function FolderToZipConverter() {
           <h3 className="card-title">📊 Folder Summary & Inspect</h3>
           
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '12px', marginBottom: '20px' }}>
-            <div style={{ background: 'rgba(0,0,0,0.2)', padding: '12px', borderRadius: '8px', border: '1px solid var(--color-border)' }}>
+            <div style={{ background: 'var(--badge-bg)', padding: '12px', borderRadius: '8px', border: '1px solid var(--color-border)' }}>
               <div style={{ fontSize: '11px', color: 'var(--color-text-muted)' }}>Raw Files</div>
               <div style={{ fontSize: '18px', fontWeight: 700, color: 'var(--color-text-primary)' }}>{files.length}</div>
             </div>
-            <div style={{ background: 'rgba(0,0,0,0.2)', padding: '12px', borderRadius: '8px', border: '1px solid var(--color-border)' }}>
+            <div style={{ background: 'var(--badge-bg)', padding: '12px', borderRadius: '8px', border: '1px solid var(--color-border)' }}>
               <div style={{ fontSize: '11px', color: 'var(--color-text-muted)' }}>Filtered Files</div>
               <div style={{ fontSize: '18px', fontWeight: 700, color: 'var(--color-cyan)' }}>{filteredList.length}</div>
             </div>
-            <div style={{ background: 'rgba(0,0,0,0.2)', padding: '12px', borderRadius: '8px', border: '1px solid var(--color-border)' }}>
+            <div style={{ background: 'var(--badge-bg)', padding: '12px', borderRadius: '8px', border: '1px solid var(--color-border)' }}>
               <div style={{ fontSize: '11px', color: 'var(--color-text-muted)' }}>Est. Zip Payload</div>
               <div style={{ fontSize: '18px', fontWeight: 700, color: 'var(--color-primary)' }}>{formatBytes(totalFilteredSize)}</div>
             </div>

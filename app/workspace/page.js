@@ -1,5 +1,13 @@
 import { auth } from "@/auth";
-import DockeryzeApp from '@/components/DockeryzeApp';
+import dynamic from 'next/dynamic';
+
+const DockeryzeApp = dynamic(() => import('@/components/DockeryzeApp'), {
+  loading: () => (
+    <div style={{ padding: '60px 24px', textAlign: 'center', color: 'var(--color-text-muted)' }}>
+      🚀 Loading Workspace Engine...
+    </div>
+  ),
+});
 
 export const metadata = {
   title: '🔧 Workspace — Dockeryze',

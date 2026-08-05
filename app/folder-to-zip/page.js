@@ -26,11 +26,15 @@ export default async function FolderToZipPage() {
       <div className="main-content-layout">
         <main className="app-container" id="main-content">
           <section className="hero" aria-labelledby="folder-to-zip-title" style={{ marginBottom: '24px' }}>
+            <div className="hero-eyebrow">
+              <span className="dot" />
+              <span>IN-BROWSER ARCHIVER</span>
+            </div>
             <h1 id="folder-to-zip-title" className="hero-title">
-              Folder to <span className="gradient-text">ZIP Tool</span>
+              Local Folder to <span className="gradient-text">ZIP Converter</span>
             </h1>
             <p className="hero-subtitle">
-              Quickly compress local directories into optimized <code>.zip</code> packages ready for deployment or Dockeryze blueprint analysis.
+              Compress local folders and source code repositories directly in your browser with automated filters for <code>node_modules</code>, <code>.git</code>, and build caches before container analysis.
             </p>
           </section>
 

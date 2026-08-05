@@ -29,7 +29,7 @@ export default function ComparisonTable() {
               <tr key={idx}>
                 <td>{row.feature}</td>
                 <td>{row.init}</td>
-                <td style={{ color: '#06b6d4', fontWeight: 'bold' }}>{row.dockeryze}</td>
+                <td style={{ color: 'var(--color-cyan)', fontWeight: 'bold' }}>{row.dockeryze}</td>
               </tr>
             ))}
           </tbody>
