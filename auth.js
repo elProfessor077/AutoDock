@@ -34,10 +34,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     authorized({ auth, request }) {
       const isLoggedIn = !!auth?.user;
       const isAuthPage = request.nextUrl.pathname.startsWith("/signin");
-      const isApiAuth = request.nextUrl.pathname.startsWith("/api/auth");
+      const isApi = request.nextUrl.pathname.startsWith("/api/");
 
-      // Allow access to auth routes always
-      if (isAuthPage || isApiAuth) return true;
+      // Allow access to auth routes & API routes always
+      if (isAuthPage || isApi) return true;
 
       // Block everything else if not logged in
       return isLoggedIn;

@@ -26,10 +26,6 @@ export default async function FolderToZipPage() {
       <div className="main-content-layout">
         <main className="app-container" id="main-content">
           <section className="hero" aria-labelledby="folder-to-zip-title" style={{ marginBottom: '24px' }}>
-            <div className="hero-eyebrow">
-              <span className="dot" />
-              <span>IN-BROWSER ARCHIVER</span>
-            </div>
             <h1 id="folder-to-zip-title" className="hero-title">
               Local Folder to <span className="gradient-text">ZIP Converter</span>
             </h1>

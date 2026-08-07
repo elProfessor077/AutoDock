@@ -12,6 +12,7 @@ const { analyzeLocally } = require('@/lib/ai/localAnalyzer');
 const { compileBlueprint } = require('@/lib/templates/blueprintCompiler');
 const { streamBlueprint } = require('@/lib/archiver');
 const { triggerCleanup } = require('@/lib/cleanup');
+const { blueprintCache } = require('@/lib/cache/blueprintCache');
 
 // Disable bodyParser size limits or next configs if needed (handled by app router)
 export const dynamic = 'force-dynamic';
@@ -52,26 +53,37 @@ export async function POST(request) {
     // ── Step 5: Pre-Filter Scanner ───────────────────────────────────────────
     const { ecosystem, manifests, summary } = scanManifests(runDir);
 
-    // ── Step 6: AI Analysis (with local fallback) ─────────────────────────────
-    let config;
-    let analysisMode = 'ai';
+    // ── Step 5b: LRU Cache Lookup ──────────────────────────────────────────────
+    const manifestHash = blueprintCache.computeManifestHash(ecosystem, manifests, summary);
+    let cacheStatus = 'MISS';
+    let config = blueprintCache.get(manifestHash);
 
-    if (process.env.OPENAI_API_KEY) {
-      try {
-        config = await analyzeProject(ecosystem, summary);
-        console.log('[Pipeline] AI analysis completed successfully.');
-      } catch (aiErr) {
-        console.warn('[Pipeline] AI analysis failed, falling back to local analyzer:', aiErr.message);
+    if (config) {
+      cacheStatus = 'HIT';
+      console.log(`[Cache HIT] Serving cached blueprint for hash: ${manifestHash.slice(0, 12)}...`);
+    } else {
+      // ── Step 6: AI Analysis (with local fallback) ─────────────────────────────
+      let analysisMode = 'ai';
+
+      if (process.env.OPENAI_API_KEY) {
+        try {
+          config = await analyzeProject(ecosystem, summary);
+          console.log('[Pipeline] AI analysis completed successfully.');
+        } catch (aiErr) {
+          console.warn('[Pipeline] AI analysis failed, falling back to local analyzer:', aiErr.message);
+          config = analyzeLocally(ecosystem, manifests);
+          analysisMode = 'local';
+        }
+      } else {
+        console.log('[Pipeline] No OPENAI_API_KEY set — using local rule-based analyzer.');
         config = analyzeLocally(ecosystem, manifests);
         analysisMode = 'local';
       }
-    } else {
-      console.log('[Pipeline] No OPENAI_API_KEY set — using local rule-based analyzer.');
-      config = analyzeLocally(ecosystem, manifests);
-      analysisMode = 'local';
-    }
 
-    console.log(`[Pipeline] Analysis mode: ${analysisMode}`, config);
+      // Store in LRU Cache for subsequent requests
+      blueprintCache.set(manifestHash, config);
+      console.log(`[Cache MISS] Stored new blueprint in cache for hash: ${manifestHash.slice(0, 12)}... (mode: ${analysisMode})`);
+    }
 
     // ── Step 7: Synthesize Blueprint templates ───────────────────────────────
     const blueprints = compileBlueprint(config);
@@ -101,6 +113,8 @@ export async function POST(request) {
       headers: {
         'Content-Type': 'application/zip',
         'Content-Disposition': 'attachment; filename="dockeryze-blueprint.zip"',
+        'X-Cache': cacheStatus,
+        'X-Manifest-Hash': manifestHash.slice(0, 16),
       },
     });
 

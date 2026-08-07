@@ -25,10 +25,6 @@ export default async function DocsPage() {
       <div className="main-content-layout">
         <main className="app-container" id="main-content">
           <section className="hero" aria-labelledby="docs-page-title" style={{ marginBottom: '40px' }}>
-            <div className="hero-eyebrow">
-              <span className="dot" />
-              <span>TECHNICAL REFERENCE</span>
-            </div>
             <h1 id="docs-page-title" className="hero-title">
               Platform &amp; <span className="gradient-text">Security Docs</span>
             </h1>

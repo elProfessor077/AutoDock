@@ -9,13 +9,13 @@ export default function Sidebar({ session, activePath }) {
   const { theme, toggleTheme } = useTheme();
 
   const navLinks = [
-    { href: '/', label: 'Home', icon: '🏠' },
-    { href: '/workspace', label: 'Workspace', icon: '🚀' },
-    { href: '/folder-to-zip', label: 'Folder to ZIP', icon: '📦' },
-    { href: '/how-it-works', label: 'How It Works', icon: '⚙️' },
-    { href: '/security', label: 'Security', icon: '🛡️' },
-    { href: '/history', label: 'History', icon: '📜' },
-    { href: '/docs', label: 'Docs', icon: '📚' },
+    { href: '/', label: 'Home' },
+    { href: '/workspace', label: 'Workspace' },
+    { href: '/folder-to-zip', label: 'Folder to ZIP' },
+    { href: '/how-it-works', label: 'How It Works' },
+    { href: '/security', label: 'Security' },
+    { href: '/history', label: 'History' },
+    { href: '/docs', label: 'Docs' },
   ];
 
   return (
@@ -23,19 +23,17 @@ export default function Sidebar({ session, activePath }) {
       <div className="top-header-container">
         <div className="top-header-left">
           <a href="/" className="top-header-logo">
-            <div className="nav-logo-icon" aria-hidden="true">
-              <Image
-                src="/dockeryze-icon.png"
+            <div className="nav-logo-icon" aria-hidden="true" style={{ background: 'transparent', boxShadow: 'none' }}>
+              <img
+                src="/dockeryze-icon.png?v=3"
                 alt="Dockeryze Logo"
-                width={26}
-                height={26}
-                style={{ borderRadius: '50%', objectFit: 'cover' }}
-                priority
+                width={28}
+                height={28}
+                style={{ borderRadius: '6px', objectFit: 'cover' }}
               />
             </div>
             <span className="nav-logo-text">Dockeryze</span>
           </a>
-          <span className="nav-badge">v2.0</span>
         </div>
 
         <nav className="top-header-nav">
@@ -45,7 +43,7 @@ export default function Sidebar({ session, activePath }) {
               href={link.href}
               className={`top-header-link ${activePath === link.href ? 'active' : ''}`}
             >
-              <span>{link.icon}</span> {link.label}
+              {link.label}
             </a>
           ))}
         </nav>

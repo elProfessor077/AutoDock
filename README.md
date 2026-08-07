@@ -1,6 +1,6 @@
 <div align="center">
 
-  # 🐳 Dockeryze v2.0
+  # 🐳 Dockeryze
   ### *AI-Powered Instant Docker & Compose Blueprint Generator*
 
   [![Next.js](https://img.shields.io/badge/Next.js-16.2-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)

@@ -26,10 +26,6 @@ export default async function HowItWorksPage() {
       <div className="main-content-layout">
         <main className="app-container" id="main-content">
           <section className="hero" aria-labelledby="how-it-works-title" style={{ marginBottom: '24px' }}>
-            <div className="hero-eyebrow">
-              <span className="dot" />
-              <span>PIPELINE ARCHITECTURE</span>
-            </div>
             <h1 id="how-it-works-title" className="hero-title">
               Under the Hood of <span className="gradient-text">Dockeryze</span>
             </h1>

@@ -21,7 +21,12 @@ export default function ComparisonTable() {
             <tr>
               <th>Feature</th>
               <th>docker init (Official)</th>
-              <th>🐳 Dockeryze AI</th>
+              <th>
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+                  <img src="/dockeryze-icon.png?v=3" alt="Dockeryze Logo" width={22} height={22} style={{ borderRadius: '4px' }} />
+                  Dockeryze AI
+                </span>
+              </th>
             </tr>
           </thead>
           <tbody>

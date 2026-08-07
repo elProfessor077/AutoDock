@@ -1,32 +1,40 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import Image from 'next/image';
+import React, { useState, useEffect, useRef } from 'react';
 import Sidebar from './Sidebar';
-import { NodeIcon, PythonIcon, GoIcon, RustIcon, JavaIcon, RubyIcon, PhpIcon, DockerIcon, GeminiIcon, RagIcon, ShieldIcon } from './EcosystemIcons';
+import { NodeIcon, PythonIcon, GoIcon, RustIcon, JavaIcon, RubyIcon, PhpIcon, DockerIcon } from './EcosystemIcons';
+
+/* --- Data ------------------------------------------------------------------ */
+
+const TYPEWRITER_PHRASES = [
+  'Instant Dockerfiles.',
+  'Multi-stage builds.',
+  'Zero config. Zero guesswork.',
+  'Production-ready in seconds.',
+  'AI-powered containerization.',
+];
 
 const QUICK_ACTIONS = [
   {
     id: 'generate',
-    icon: '🚀',
     title: 'Generate Blueprint',
     desc: 'Upload your project archive and get instant Docker & Compose configs.',
     href: '/workspace',
     accent: 'var(--color-primary)',
     accentGlow: 'var(--color-primary-glow)',
+    isPrimary: true,
+    badge: 'Start Here',
   },
   {
     id: 'folder-to-zip',
-    icon: '📦',
     title: 'Folder to ZIP',
-    desc: 'Convert any folder or repository into a zip archive with smart node_modules filters.',
+    desc: 'Convert any folder into a zip archive with smart node_modules filters.',
     href: '/folder-to-zip',
     accent: '#a3be8c',
     accentGlow: 'var(--color-success-glow)',
   },
   {
     id: 'history',
-    icon: '📜',
     title: 'View History',
     desc: 'Browse your past blueprint generations and download previous configs.',
     href: '/history',
@@ -35,7 +43,6 @@ const QUICK_ACTIONS = [
   },
   {
     id: 'how-it-works',
-    icon: '⚙️',
     title: 'How It Works',
     desc: 'Explore the AI pipeline: manifest scanning, RAG retrieval & Gemini orchestration.',
     href: '/how-it-works',
@@ -44,7 +51,6 @@ const QUICK_ACTIONS = [
   },
   {
     id: 'security',
-    icon: '🛡️',
     title: 'Security',
     desc: 'Learn about zip-slip guards, shredder cleanup, and our isolation architecture.',
     href: '/security',
@@ -53,7 +59,6 @@ const QUICK_ACTIONS = [
   },
   {
     id: 'docs',
-    icon: '📚',
     title: 'Documentation',
     desc: 'API reference, supported ecosystems, configuration options & best practices.',
     href: '/docs',
@@ -74,230 +79,336 @@ const SUPPORTED_ECOSYSTEMS = [
 ];
 
 const STATS = [
-  { label: 'Ecosystems', value: '7+', icon: '🌍' },
-  { label: 'RAG Recipes', value: '150+', icon: '📚' },
-  { label: 'Avg Speed', value: '<8s', icon: '⚡' },
-  { label: 'AI Model', value: 'Gemini 2.0', icon: '🤖' },
+  { label: 'Ecosystems', value: 7, suffix: '+' },
+  { label: 'RAG Recipes', value: 150, suffix: '+' },
+  { label: 'Avg Speed', value: 8, suffix: 's', prefix: '<' },
+  { label: 'AI Model', value: 'Gemini 2.0', isText: true },
 ];
+
 
 const DEMO_PRESETS = [
   {
     id: 'node-postgres',
     name: 'Node.js + PostgreSQL',
     Icon: NodeIcon,
-    dockerfile: `# Multi-stage Node.js 20 LTS Production Build
-FROM node:20-alpine AS builder
-WORKDIR /app
-COPY package*.json ./
-RUN npm ci --only=production
-COPY . .
-RUN npm run build
-
-FROM node:20-alpine AS runner
-WORKDIR /app
-ENV NODE_ENV=production
-COPY --from=builder /app/package*.json ./
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/dist ./dist
-USER node
-EXPOSE 3000
-CMD ["node", "dist/index.js"]`,
-    compose: `version: '3.8'
-services:
-  app:
-    build: .
-    ports:
-      - "3000:3000"
-    environment:
-      - DATABASE_URL=postgres://postgres:secret@db:5432/appdb
-    depends_on:
-      - db
-    restart: unless-stopped
-
-  db:
-    image: postgres:16-alpine
-    environment:
-      - POSTGRES_PASSWORD=secret
-      - POSTGRES_DB=appdb
-    ports:
-      - "5432:5432"
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-
-volumes:
-  pgdata:`
+    dockerfile: [
+      { t: 'cm', v: '# Multi-stage Node.js 20 LTS Production Build\n' },
+      { t: 'kw', v: 'FROM' }, { t: 'pl', v: ' node:20-alpine ' }, { t: 'kw', v: 'AS' }, { t: 'pl', v: ' builder\n' },
+      { t: 'kw', v: 'WORKDIR' }, { t: 'pl', v: ' /app\n' },
+      { t: 'kw', v: 'COPY' }, { t: 'pl', v: ' package*.json ./\n' },
+      { t: 'kw', v: 'RUN' }, { t: 'pl', v: ' npm ci --only=production\n' },
+      { t: 'kw', v: 'COPY' }, { t: 'pl', v: ' . .\n' },
+      { t: 'kw', v: 'RUN' }, { t: 'pl', v: ' npm run build\n\n' },
+      { t: 'kw', v: 'FROM' }, { t: 'pl', v: ' node:20-alpine ' }, { t: 'kw', v: 'AS' }, { t: 'pl', v: ' runner\n' },
+      { t: 'kw', v: 'WORKDIR' }, { t: 'pl', v: ' /app\n' },
+      { t: 'kw', v: 'ENV' }, { t: 'pl', v: ' NODE_ENV=' }, { t: 'st', v: 'production\n' },
+      { t: 'kw', v: 'USER' }, { t: 'pl', v: ' node\n' },
+      { t: 'kw', v: 'EXPOSE' }, { t: 'nu', v: ' 3000\n' },
+      { t: 'kw', v: 'CMD' }, { t: 'st', v: ' ["node", "dist/index.js"]' },
+    ],
+    compose: [
+      { t: 'kv', v: 'version' }, { t: 'pl', v: ': ' }, { t: 'st', v: "'3.8'\n" },
+      { t: 'kv', v: 'services:\n' },
+      { t: 'kv', v: '  app:\n' },
+      { t: 'pl', v: '    ' }, { t: 'kv', v: 'build' }, { t: 'pl', v: ': .\n' },
+      { t: 'pl', v: '    ' }, { t: 'kv', v: 'ports' }, { t: 'pl', v: ':\n' }, { t: 'st', v: '      - "3000:3000"\n' },
+      { t: 'pl', v: '    ' }, { t: 'kv', v: 'depends_on' }, { t: 'pl', v: ':\n      - db\n' },
+      { t: 'pl', v: '    ' }, { t: 'kv', v: 'restart' }, { t: 'pl', v: ': unless-stopped\n\n' },
+      { t: 'kv', v: '  db:\n' },
+      { t: 'pl', v: '    ' }, { t: 'kv', v: 'image' }, { t: 'pl', v: ': postgres:16-alpine\n' },
+      { t: 'pl', v: '    ' }, { t: 'kv', v: 'volumes' }, { t: 'pl', v: ':\n      - pgdata:/var/lib/postgresql/data' },
+    ],
   },
   {
     id: 'python-fastapi',
     name: 'Python FastAPI + Redis',
     Icon: PythonIcon,
-    dockerfile: `# Multi-stage Python 3.11 Slim Production Build
-FROM python:3.11-slim AS builder
-WORKDIR /app
-RUN python -m venv /opt/venv
-ENV PATH="/opt/venv/bin:$PATH"
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-
-FROM python:3.11-slim AS runner
-WORKDIR /app
-COPY --from=builder /opt/venv /opt/venv
-ENV PATH="/opt/venv/bin:$PATH"
-COPY . .
-EXPOSE 8000
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]`,
-    compose: `version: '3.8'
-services:
-  web:
-    build: .
-    ports:
-      - "8000:8000"
-    environment:
-      - REDIS_URL=redis://cache:6379/0
-    depends_on:
-      - cache
-
-  cache:
-    image: redis:7-alpine
-    ports:
-      - "6379:6379"`
+    dockerfile: [
+      { t: 'cm', v: '# Multi-stage Python 3.11 Slim Production Build\n' },
+      { t: 'kw', v: 'FROM' }, { t: 'pl', v: ' python:3.11-slim ' }, { t: 'kw', v: 'AS' }, { t: 'pl', v: ' builder\n' },
+      { t: 'kw', v: 'WORKDIR' }, { t: 'pl', v: ' /app\n' },
+      { t: 'kw', v: 'RUN' }, { t: 'pl', v: ' python -m venv /opt/venv\n' },
+      { t: 'kw', v: 'ENV' }, { t: 'pl', v: ' PATH=' }, { t: 'st', v: '"/opt/venv/bin:$PATH"\n' },
+      { t: 'kw', v: 'COPY' }, { t: 'pl', v: ' requirements.txt .\n' },
+      { t: 'kw', v: 'RUN' }, { t: 'pl', v: ' pip install --no-cache-dir -r requirements.txt\n\n' },
+      { t: 'kw', v: 'FROM' }, { t: 'pl', v: ' python:3.11-slim ' }, { t: 'kw', v: 'AS' }, { t: 'pl', v: ' runner\n' },
+      { t: 'kw', v: 'EXPOSE' }, { t: 'nu', v: ' 8000\n' },
+      { t: 'kw', v: 'CMD' }, { t: 'st', v: ' ["uvicorn", "main:app", "--host", "0.0.0.0"]' },
+    ],
+    compose: [
+      { t: 'kv', v: 'version' }, { t: 'pl', v: ': ' }, { t: 'st', v: "'3.8'\n" },
+      { t: 'kv', v: 'services:\n' },
+      { t: 'kv', v: '  web:\n' },
+      { t: 'pl', v: '    ' }, { t: 'kv', v: 'build' }, { t: 'pl', v: ': .\n' },
+      { t: 'pl', v: '    ' }, { t: 'kv', v: 'ports' }, { t: 'pl', v: ':\n' }, { t: 'st', v: '      - "8000:8000"\n' },
+      { t: 'pl', v: '    ' }, { t: 'kv', v: 'depends_on' }, { t: 'pl', v: ':\n      - cache\n\n' },
+      { t: 'kv', v: '  cache:\n' },
+      { t: 'pl', v: '    ' }, { t: 'kv', v: 'image' }, { t: 'pl', v: ': redis:7-alpine' },
+    ],
   },
   {
     id: 'go-microservice',
     name: 'Go Microservice',
     Icon: GoIcon,
-    dockerfile: `# Ultra-compact Go 1.22 Scratch Build
-FROM golang:1.22-alpine AS builder
-WORKDIR /app
-COPY go.mod go.sum ./
-RUN go mod download
-COPY . .
-RUN CGO_ENABLED=0 GOOS=linux go build -o server .
-
-FROM scratch
-COPY --from=builder /app/server /server
-EXPOSE 8080
-ENTRYPOINT ["/server"]`,
-    compose: `version: '3.8'
-services:
-  api:
-    build: .
-    ports:
-      - "8080:8080"
-    restart: unless-stopped`
-  }
+    dockerfile: [
+      { t: 'cm', v: '# Ultra-compact Go 1.22 Scratch Build\n' },
+      { t: 'kw', v: 'FROM' }, { t: 'pl', v: ' golang:1.22-alpine ' }, { t: 'kw', v: 'AS' }, { t: 'pl', v: ' builder\n' },
+      { t: 'kw', v: 'WORKDIR' }, { t: 'pl', v: ' /app\n' },
+      { t: 'kw', v: 'COPY' }, { t: 'pl', v: ' go.mod go.sum ./\n' },
+      { t: 'kw', v: 'RUN' }, { t: 'pl', v: ' go mod download\n' },
+      { t: 'kw', v: 'COPY' }, { t: 'pl', v: ' . .\n' },
+      { t: 'kw', v: 'RUN' }, { t: 'pl', v: ' CGO_ENABLED=' }, { t: 'nu', v: '0' }, { t: 'pl', v: ' GOOS=linux go build -o server .\n\n' },
+      { t: 'kw', v: 'FROM' }, { t: 'pl', v: ' scratch\n' },
+      { t: 'kw', v: 'COPY' }, { t: 'pl', v: ' --from=builder /app/server /server\n' },
+      { t: 'kw', v: 'EXPOSE' }, { t: 'nu', v: ' 8080\n' },
+      { t: 'kw', v: 'ENTRYPOINT' }, { t: 'st', v: ' ["/server"]' },
+    ],
+    compose: [
+      { t: 'kv', v: 'version' }, { t: 'pl', v: ': ' }, { t: 'st', v: "'3.8'\n" },
+      { t: 'kv', v: 'services:\n' },
+      { t: 'kv', v: '  api:\n' },
+      { t: 'pl', v: '    ' }, { t: 'kv', v: 'build' }, { t: 'pl', v: ': .\n' },
+      { t: 'pl', v: '    ' }, { t: 'kv', v: 'ports' }, { t: 'pl', v: ':\n' }, { t: 'st', v: '      - "8080:8080"\n' },
+      { t: 'pl', v: '    ' }, { t: 'kv', v: 'restart' }, { t: 'pl', v: ': unless-stopped' },
+    ],
+  },
 ];
 
+/* --- Hooks ----------------------------------------------------------------- */
+
+function useTypewriter(phrases, speed = 65, pause = 1800) {
+  const [displayed, setDisplayed] = useState('');
+  const [phraseIdx, setPhraseIdx] = useState(0);
+  const [charIdx, setCharIdx] = useState(0);
+  const [deleting, setDeleting] = useState(false);
+
+  useEffect(() => {
+    const current = phrases[phraseIdx];
+    let timeout;
+    if (!deleting && charIdx < current.length) {
+      timeout = setTimeout(() => setCharIdx((c) => c + 1), speed);
+    } else if (!deleting && charIdx === current.length) {
+      timeout = setTimeout(() => setDeleting(true), pause);
+    } else if (deleting && charIdx > 0) {
+      timeout = setTimeout(() => setCharIdx((c) => c - 1), speed / 2);
+    } else if (deleting && charIdx === 0) {
+      setDeleting(false);
+      setPhraseIdx((i) => (i + 1) % phrases.length);
+    }
+    setDisplayed(current.slice(0, charIdx));
+    return () => clearTimeout(timeout);
+  }, [charIdx, deleting, phraseIdx, phrases, speed, pause]);
+
+  return displayed;
+}
+
+function useCountUp(target, duration = 1600) {
+  const [count, setCount] = useState(0);
+  const ref = useRef(null);
+  const started = useRef(false);
+
+  useEffect(() => {
+    if (typeof target !== 'number') return;
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !started.current) {
+          started.current = true;
+          const start = performance.now();
+          const tick = (now) => {
+            const p = Math.min((now - start) / duration, 1);
+            const eased = 1 - Math.pow(1 - p, 3);
+            setCount(Math.round(eased * target));
+            if (p < 1) requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick);
+        }
+      },
+      { threshold: 0.5 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [target, duration]);
+
+  return { count, ref };
+}
+
+function useScrollReveal(threshold = 0.12) {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setVisible(true); observer.disconnect(); } },
+      { threshold }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [threshold]);
+  return { ref, visible };
+}
+
+/* --- Sub-components ------------------------------------------------------- */
+
+function StatCard({ stat }) {
+  const { count, ref } = useCountUp(stat.isText ? null : stat.value);
+  const display = stat.isText
+    ? stat.value
+    : `${stat.prefix || ''}${count}${stat.suffix || ''}`;
+  return (
+    <div className="home-stat-card" ref={ref}>
+      <div className="home-stat-info">
+        <span className="home-stat-value">{display}</span>
+        <span className="home-stat-label">{stat.label}</span>
+      </div>
+    </div>
+  );
+}
+
+const SYN_CLASS = { kw: 'syn-kw', st: 'syn-st', cm: 'syn-cm', kv: 'syn-kv', nu: 'syn-nu', pl: '' };
+
+function SyntaxCode({ tokens }) {
+  return (
+    <pre className="demo-code-block">
+      <code>
+        {tokens.map((tok, i) => {
+          const cls = SYN_CLASS[tok.t] || '';
+          return cls ? <span key={i} className={cls}>{tok.v}</span> : <span key={i}>{tok.v}</span>;
+        })}
+      </code>
+    </pre>
+  );
+}
+
+function BenchmarkSection() {
+  const { ref, visible } = useScrollReveal(0.2);
+  return (
+    <div className="glass-card benchmark-card" ref={ref}>
+      <div className="benchmark-grid">
+        <div className="benchmark-column traditional">
+          <div className="benchmark-badge error">Traditional Manual Setup</div>
+          <div className="benchmark-stat benchmark-stat-bad">45 Mins</div>
+          <p className="benchmark-desc">Manual config writing, trial &amp; error, outdated base tags, security risks.</p>
+          <div className="bm-feat-list">
+            <span className="bm-feat bm-no">❌ Error-prone</span>
+            <span className="bm-feat bm-no">❌ Hours of research</span>
+            <span className="bm-feat bm-no">❌ Security gaps</span>
+            <span className="bm-feat bm-no">❌ Outdated images</span>
+          </div>
+          <div className="benchmark-bar-wrap">
+            <div className="benchmark-bar traditional-bar" style={{ width: visible ? '92%' : '0%' }} />
+          </div>
+        </div>
+        <div className="benchmark-divider"><span>VS</span></div>
+        <div className="benchmark-column dockeryze">
+          <div className="benchmark-badge success">Dockeryze AI Engine</div>
+          <div className="benchmark-stat benchmark-stat-good">&lt; 8 Seconds</div>
+          <p className="benchmark-desc">Manifest scanning, RAG LTS recipe matching, multi-stage Alpine builds.</p>
+          <div className="bm-feat-list">
+            <span className="bm-feat bm-yes">✅ AI-powered</span>
+            <span className="bm-feat bm-yes">✅ Instant generation</span>
+            <span className="bm-feat bm-yes">✅ Security-first</span>
+            <span className="bm-feat bm-yes">✅ LTS best practices</span>
+          </div>
+          <div className="benchmark-bar-wrap">
+            <div className="benchmark-bar dockeryze-bar" style={{ width: visible ? '14%' : '0%' }} />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* --- Main Component -------------------------------------------------------- */
+
 export default function HomePage({ session }) {
-  const [greeting, setGreeting] = useState('');
-  const [currentTime, setCurrentTime] = useState('');
   const [activePreset, setActivePreset] = useState(DEMO_PRESETS[0]);
   const [activeTab, setActiveTab] = useState('dockerfile');
   const [copied, setCopied] = useState(false);
+  const typewriterText = useTypewriter(TYPEWRITER_PHRASES);
 
-  useEffect(() => {
-    const updateTime = () => {
-      const now = new Date();
-      const hour = now.getHours();
-      if (hour < 12) setGreeting('Good morning');
-      else if (hour < 17) setGreeting('Good afternoon');
-      else setGreeting('Good evening');
-      setCurrentTime(now.toLocaleString('en-US', {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-      }));
-    };
-    updateTime();
-    const interval = setInterval(updateTime, 60000);
-    return () => clearInterval(interval);
-  }, []);
+  const statsReveal    = useScrollReveal();
+  const actionsReveal  = useScrollReveal();
+  const ecoReveal      = useScrollReveal();
+  const demoReveal     = useScrollReveal();
+  const benchReveal    = useScrollReveal();
+  const ctaReveal      = useScrollReveal();
 
   const userName = session?.user?.name || session?.user?.email?.split('@')[0] || 'Developer';
 
   const handleCopy = () => {
-    const textToCopy = activeTab === 'dockerfile' ? activePreset.dockerfile : activePreset.compose;
-    navigator.clipboard.writeText(textToCopy);
+    const tokens = activeTab === 'dockerfile' ? activePreset.dockerfile : activePreset.compose;
+    navigator.clipboard.writeText(tokens.map((t) => t.v).join(''));
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
   return (
     <div className="sidebar-layout">
-      {/* Moving Ambient Background Orbs */}
+      {/* Ambient Background Orbs */}
       <div className="bg-orbs" aria-hidden="true">
         <div className="bg-orb bg-orb-1" />
         <div className="bg-orb bg-orb-2" />
         <div className="bg-orb bg-orb-3" />
       </div>
 
-      {/* Sidebar Navigation */}
       <Sidebar session={session} activePath="/" />
 
-      {/* Main Content Layout Area */}
       <div className="main-content-layout">
         <main className="app-container" id="main-content">
-          {/* Welcome Hero Section */}
-          <section className="home-hero" aria-labelledby="home-hero-title">
-            <div className="home-hero-greeting">
-              <div className="home-hero-avatar-ring">
-                {session?.user?.image ? (
-                  <Image
-                    src={session.user.image}
-                    alt={userName}
-                    width={48}
-                    height={48}
-                    className="home-hero-avatar"
-                    priority
-                    unoptimized
-                  />
-                ) : (
-                  <div className="home-hero-avatar-placeholder">
-                    {userName.charAt(0).toUpperCase()}
-                  </div>
-                )}
-                <div className="home-hero-status-dot" aria-label="Online" />
-              </div>
-              <div className="home-hero-text">
-                <div className="hero-eyebrow" style={{ marginBottom: '8px' }}>
-                  <span className="dot" />
-                  <span>PLATFORM ACTIVE · GEMINI 2.0 + RAG VECTOR ENGINE</span>
-                </div>
-                <h1 id="home-hero-title" className="home-hero-title">
-                  {greeting}, <span className="gradient-text">{userName}</span>
-                </h1>
-                <p className="home-hero-subtitle">
-                  Welcome to Dockeryze — your AI-powered containerization engine for instant Docker &amp; Compose blueprints.
-                </p>
-              </div>
+
+          {/* ── SaaS Hero ─────────────────────────────────────────────────── */}
+          <section className="home-hero-saas" aria-labelledby="home-hero-title">
+
+            <div className="home-welcome-pill">
+              👋 Welcome back, <strong>{userName}</strong>
+            </div>
+
+            <h1 id="home-hero-title" className="home-hero-saas-title">
+              Ship Container-Ready Code<br />
+              <span className="gradient-text">in Seconds.</span>
+            </h1>
+
+            <p className="home-hero-saas-sub">
+              <span className="typewriter-text">{typewriterText}</span>
+              <span className="typewriter-caret" aria-hidden="true">|</span>
+            </p>
+
+            <div className="home-hero-cta-row">
+              <a href="/workspace" className="home-cta-btn home-cta-btn-primary" id="hero-cta-launch">
+                🚀 Launch Workspace
+              </a>
+              <a href="/how-it-works" className="home-cta-btn home-cta-btn-ghost">
+                ⚙️ How It Works
+              </a>
             </div>
           </section>
 
-          {/* Stats Overview */}
-          <section className="home-stats-row" aria-label="Platform Statistics">
-            {STATS.map((stat) => (
-              <div key={stat.label} className="home-stat-card">
-                <span className="home-stat-icon">{stat.icon}</span>
-                <div className="home-stat-info">
-                  <span className="home-stat-value">{stat.value}</span>
-                  <span className="home-stat-label">{stat.label}</span>
-                </div>
-              </div>
-            ))}
+
+          {/* ── Stats ─────────────────────────────────────────────────────── */}
+          <section
+            className={`home-stats-row scroll-reveal ${statsReveal.visible ? 'visible' : ''}`}
+            ref={statsReveal.ref}
+            aria-label="Platform Statistics"
+          >
+            {STATS.map((stat) => <StatCard key={stat.label} stat={stat} />)}
           </section>
 
-          {/* Quick Actions Grid */}
-          <section className="home-section" aria-label="Quick Actions">
-            <h2 className="home-section-title">Quick Actions</h2>
+          {/* ── Quick Actions ─────────────────────────────────────────────── */}
+          <section
+            className={`home-section scroll-reveal ${actionsReveal.visible ? 'visible' : ''}`}
+            ref={actionsReveal.ref}
+            aria-label="Quick Actions"
+          >
+            <h2 className="home-section-title">Jump Right In</h2>
             <div className="home-actions-grid">
               {QUICK_ACTIONS.map((action, i) => (
                 <a
                   key={action.id}
                   href={action.href}
-                  className="home-action-card"
+                  className={`home-action-card ${action.isPrimary ? 'home-action-card-primary' : ''}`}
                   id={`action-${action.id}`}
                   style={{
                     '--card-accent': action.accent,
@@ -305,9 +416,9 @@ export default function HomePage({ session }) {
                     animationDelay: `${i * 0.08}s`,
                   }}
                 >
-                  <div className="home-action-icon-wrap">
-                    <span className="home-action-icon">{action.icon}</span>
-                  </div>
+                  {action.isPrimary && (
+                    <div className="home-action-primary-badge">{action.badge}</div>
+                  )}
                   <div className="home-action-content">
                     <h3 className="home-action-title">{action.title}</h3>
                     <p className="home-action-desc">{action.desc}</p>
@@ -318,19 +429,17 @@ export default function HomePage({ session }) {
             </div>
           </section>
 
-          {/* Supported Ecosystems */}
-          <section className="home-section" aria-label="Supported Ecosystems">
-            <h2 className="home-section-title">Supported Ecosystems</h2>
+          {/* ── Supported Ecosystems ──────────────────────────────────────── */}
+          <section
+            className={`home-section scroll-reveal ${ecoReveal.visible ? 'visible' : ''}`}
+            ref={ecoReveal.ref}
+            aria-label="Supported Ecosystems"
+          >
+            <h2 className="home-section-title">Works With Your Stack</h2>
             <div className="home-ecosystems-grid">
               {SUPPORTED_ECOSYSTEMS.map((eco) => (
-                <div
-                  key={eco.name}
-                  className="home-ecosystem-chip"
-                  style={{ '--eco-color': eco.color }}
-                >
-                  <span className="home-ecosystem-icon">
-                    <eco.Icon size={20} />
-                  </span>
+                <div key={eco.name} className="home-ecosystem-chip" style={{ '--eco-color': eco.color }}>
+                  <span className="home-ecosystem-icon"><eco.Icon size={28} /></span>
                   <span className="home-ecosystem-name">{eco.name}</span>
                   <div className="home-ecosystem-glow" aria-hidden="true" />
                 </div>
@@ -338,11 +447,13 @@ export default function HomePage({ session }) {
             </div>
           </section>
 
-          {/* Interactive Live Blueprint Demo Preview */}
-          <section className="home-section" aria-label="Live Interactive Blueprint Demo">
-            <h2 className="home-section-title">
-              ⚡ Interactive Live Blueprint Demo
-            </h2>
+          {/* ── Live Demo ─────────────────────────────────────────────────── */}
+          <section
+            className={`home-section scroll-reveal ${demoReveal.visible ? 'visible' : ''}`}
+            ref={demoReveal.ref}
+            aria-label="Live Interactive Blueprint Demo"
+          >
+            <h2 className="home-section-title">⚡ See It In Action</h2>
             <div className="glass-card demo-card">
               <div className="demo-header">
                 <div className="demo-presets-row">
@@ -361,73 +472,46 @@ export default function HomePage({ session }) {
                     );
                   })}
                 </div>
-
                 <div className="demo-controls-row">
                   <div className="demo-tabs">
-                    <button
-                      type="button"
-                      className={`demo-tab ${activeTab === 'dockerfile' ? 'active' : ''}`}
-                      onClick={() => setActiveTab('dockerfile')}
-                    >
+                    <button type="button" className={`demo-tab ${activeTab === 'dockerfile' ? 'active' : ''}`} onClick={() => setActiveTab('dockerfile')}>
                       Dockerfile
                     </button>
-                    <button
-                      type="button"
-                      className={`demo-tab ${activeTab === 'compose' ? 'active' : ''}`}
-                      onClick={() => setActiveTab('compose')}
-                    >
+                    <button type="button" className={`demo-tab ${activeTab === 'compose' ? 'active' : ''}`} onClick={() => setActiveTab('compose')}>
                       docker-compose.yml
                     </button>
                   </div>
-
                   <button type="button" className="demo-copy-btn" onClick={handleCopy}>
                     {copied ? '✅ Copied!' : '📋 Copy Code'}
                   </button>
                 </div>
               </div>
-
               <div className="demo-code-container">
-                <pre className="demo-code-block">
-                  <code>{activeTab === 'dockerfile' ? activePreset.dockerfile : activePreset.compose}</code>
-                </pre>
+                <SyntaxCode tokens={activeTab === 'dockerfile' ? activePreset.dockerfile : activePreset.compose} />
               </div>
             </div>
           </section>
 
-          {/* Efficiency Benchmark Comparison */}
-          <section className="home-section" aria-label="Performance Benchmark">
-            <h2 className="home-section-title">📊 Efficiency Comparison</h2>
-            <div className="glass-card benchmark-card">
-              <div className="benchmark-grid">
-                <div className="benchmark-column traditional">
-                  <div className="benchmark-badge error">Traditional Manual Setup</div>
-                  <div className="benchmark-stat">45 Mins</div>
-                  <p className="benchmark-desc">Manual configuration writing, trial &amp; error, outdated base tags, security risks.</p>
-                  <div className="benchmark-bar-wrap">
-                    <div className="benchmark-bar traditional-bar" style={{ width: '90%' }} />
-                  </div>
-                </div>
-
-                <div className="benchmark-divider">
-                  <span>VS</span>
-                </div>
-
-                <div className="benchmark-column dockeryze">
-                  <div className="benchmark-badge success">Dockeryze AI Engine</div>
-                  <div className="benchmark-stat">&lt; 8 Seconds</div>
-                  <p className="benchmark-desc">Manifest scanning, active RAG LTS recipe matching, multi-stage Alpine builds.</p>
-                  <div className="benchmark-bar-wrap">
-                    <div className="benchmark-bar dockeryze-bar" style={{ width: '15%' }} />
-                  </div>
-                </div>
-              </div>
-            </div>
+          {/* ── Benchmark ─────────────────────────────────────────────────── */}
+          <section
+            className={`home-section scroll-reveal ${benchReveal.visible ? 'visible' : ''}`}
+            ref={benchReveal.ref}
+            aria-label="Performance Benchmark"
+          >
+            <h2 className="home-section-title">📊 Why Developers Choose Dockeryze</h2>
+            <BenchmarkSection />
           </section>
 
-          {/* CTA Banner */}
-          <section className="home-cta-banner" aria-label="Get Started">
+          {/* ── CTA Banner ────────────────────────────────────────────────── */}
+          <section
+            className={`home-cta-banner scroll-reveal ${ctaReveal.visible ? 'visible' : ''}`}
+            ref={ctaReveal.ref}
+            aria-label="Get Started"
+          >
             <div className="home-cta-content">
-              <div className="home-cta-icon">🐳</div>
+              <div className="home-cta-icon">
+                <img src="/dockeryze-icon.png?v=3" alt="Dockeryze Logo" width={52} height={52} style={{ borderRadius: '10px' }} />
+              </div>
               <div className="home-cta-text">
                 <h3 className="home-cta-title">Ready to containerize your project?</h3>
                 <p className="home-cta-desc">
@@ -435,16 +519,40 @@ export default function HomePage({ session }) {
                 </p>
               </div>
             </div>
-            <a href="/workspace" className="home-cta-btn">
+            <a href="/workspace" className="home-cta-btn home-cta-btn-pulse" id="bottom-cta-launch">
               🚀 Launch Workspace
             </a>
           </section>
         </main>
 
-        {/* Footer copyright */}
-        <footer className="footer" role="contentinfo">
-          <div className="nav-container">
-            <p>Powered by <span>Gemini 2.0</span> &amp; Cosine RAG Vector DB · Dockeryze &copy; {new Date().getFullYear()}</p>
+        {/* ── Rich Footer ─────────────────────────────────────────────────── */}
+        <footer className="footer-rich" role="contentinfo">
+          <div className="footer-rich-inner">
+            <div className="footer-brand">
+              <span className="footer-logo-text" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <img src="/dockeryze-icon.png?v=3" alt="Dockeryze Logo" width={28} height={28} style={{ borderRadius: '6px' }} />
+                Dockeryze
+              </span>
+              <p className="footer-tagline">AI-powered containerization for modern developers.</p>
+              <p className="footer-powered">Powered by <span>Gemini 2.0</span> &amp; Cosine RAG Vector DB</p>
+            </div>
+            <nav className="footer-nav-cols" aria-label="Footer Navigation">
+              <div className="footer-nav-col">
+                <span className="footer-nav-heading">Tools</span>
+                <a href="/workspace" className="footer-nav-link">Workspace</a>
+                <a href="/folder-to-zip" className="footer-nav-link">Folder to ZIP</a>
+                <a href="/history" className="footer-nav-link">History</a>
+              </div>
+              <div className="footer-nav-col">
+                <span className="footer-nav-heading">Learn</span>
+                <a href="/how-it-works" className="footer-nav-link">How It Works</a>
+                <a href="/docs" className="footer-nav-link">Documentation</a>
+                <a href="/security" className="footer-nav-link">Security</a>
+              </div>
+            </nav>
+          </div>
+          <div className="footer-bottom">
+            <span>Dockeryze &copy; {new Date().getFullYear()} — All rights reserved.</span>
           </div>
         </footer>
       </div>

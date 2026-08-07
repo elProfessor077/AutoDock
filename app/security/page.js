@@ -26,10 +26,6 @@ export default async function SecurityPage() {
       <div className="main-content-layout">
         <main className="app-container" id="main-content">
           <section className="hero" aria-labelledby="security-page-title" style={{ marginBottom: '24px' }}>
-            <div className="hero-eyebrow">
-              <span className="dot" />
-              <span>ISOLATION & PRIVACY SHIELD</span>
-            </div>
             <h1 id="security-page-title" className="hero-title">
               Multi-Layered <span className="gradient-text">Security Architecture</span>
             </h1>

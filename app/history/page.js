@@ -26,10 +26,6 @@ export default async function HistoryPage() {
       <div className="main-content-layout">
         <main className="app-container" id="main-content">
           <section className="hero" aria-labelledby="history-page-title" style={{ marginBottom: '40px' }}>
-            <div className="hero-eyebrow">
-              <span className="dot" />
-              <span>PIPELINE EXECUTION LOGS</span>
-            </div>
             <h1 id="history-page-title" className="hero-title">
               Generation &amp; <span className="gradient-text">Activity History</span>
             </h1>

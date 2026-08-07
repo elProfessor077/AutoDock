@@ -5,10 +5,6 @@ import React from 'react';
 export default function HeroSection() {
   return (
     <section className="hero" aria-labelledby="hero-title">
-      <div className="hero-eyebrow">
-        <span className="dot" />
-        <span>INSTANT CONTAINERIZATION ENGINE</span>
-      </div>
       <h1 id="hero-title" className="hero-title">
         Automated Docker &amp; Compose<br />
         <span className="gradient-text">Deployment Blueprints</span>

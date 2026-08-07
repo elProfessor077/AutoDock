@@ -9,6 +9,10 @@ import Dropzone from './Dropzone';
 import PipelineVisualizer from './PipelineVisualizer';
 import StatusBadge from './StatusBadge';
 import BlueprintViewer from './BlueprintViewer';
+import SecurityAuditBadge from './SecurityAuditBadge';
+import SecretShieldBuilder from './SecretShieldBuilder';
+import DigitalTwinCard from './DigitalTwinCard';
+import { auditContainerSecurity } from '@/lib/security/auditor';
 import { saveHistoryEntry } from './HistoryList';
 import AuthButton from './AuthButton';
 import Sidebar from './Sidebar';
@@ -105,6 +109,10 @@ export default function DockeryzeApp({ session }) {
         throw new Error(msg);
       }
 
+      // Read cache header
+      const cacheHeader = response.headers.get('x-cache');
+      const isCached = cacheHeader === 'HIT';
+
       // Read ZIP response stream
       const blob = await response.blob();
       const url = URL.createObjectURL(blob);
@@ -137,6 +145,7 @@ export default function DockeryzeApp({ session }) {
         ecosystem,
         runtime,
         framework,
+        isCached,
       });
 
       // Trigger auto-download
@@ -244,8 +253,28 @@ export default function DockeryzeApp({ session }) {
               <PipelineVisualizer currentState={status} />
             </div>
 
+            {/* DevSecOps Container Security Audit Badge */}
+            {blueprintFiles && (
+              <SecurityAuditBadge
+                audit={auditContainerSecurity(
+                  blueprintFiles['Dockerfile'] || '',
+                  blueprintFiles['docker-compose.yml'] || ''
+                )}
+              />
+            )}
+
+            {/* Secret Shield Environment Variable Builder */}
+            {blueprintFiles && (
+              <SecretShieldBuilder
+                initialEnv={blueprintFiles['.env.example'] || ''}
+              />
+            )}
+
             {/* Unzipped Live Blueprint Folder Viewer */}
             {blueprintFiles && <BlueprintViewer files={blueprintFiles} />}
+
+            {/* Digital Twin Container Resource Simulator Card */}
+            {blueprintFiles && <DigitalTwinCard ecosystem="nodejs" dependencyCount={15} databases={['postgres']} />}
           </div>
 
           {/* Tech badges marquee */}

@@ -2733,3 +2733,560 @@ body::before {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
 }
+
+/* ── 2-Factor OTP Verification Card ─────────────────────────────────────── */
+.otp-card {
+  width: 100%;
+  max-width: 440px;
+  padding: var(--space-8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+}
+
+.otp-header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.otp-icon-badge {
+  font-size: 36px;
+  margin-bottom: 4px;
+}
+
+.otp-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--color-text-primary);
+}
+
+.otp-subtitle {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+.otp-email {
+  color: var(--color-primary);
+}
+
+.otp-demo-pill {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  background: var(--color-primary-glow);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+}
+
+.otp-demo-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  letter-spacing: 0.5px;
+}
+
+.otp-demo-code {
+  font-size: 16px;
+  font-weight: 900;
+  font-family: var(--font-mono);
+  letter-spacing: 3px;
+  color: var(--color-primary);
+}
+
+.otp-error {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  background: rgba(244, 63, 94, 0.1);
+  border: 1px solid rgba(244, 63, 94, 0.3);
+  border-radius: var(--radius-md);
+  color: var(--color-error);
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.otp-inputs-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  width: 100%;
+}
+
+.otp-pin-input {
+  width: 44px;
+  height: 52px;
+  border-radius: var(--radius-md);
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+  font-size: 22px;
+  font-weight: 800;
+  font-family: var(--font-mono);
+  text-align: center;
+  transition: all var(--transition-fast);
+  outline: none;
+}
+
+.otp-pin-input:focus,
+.otp-pin-input.filled {
+  border-color: var(--color-primary);
+  background: var(--color-surface);
+  box-shadow: 0 0 12px var(--color-primary-glow);
+}
+
+.otp-pin-input.has-error {
+  border-color: var(--color-error);
+  box-shadow: 0 0 12px rgba(244, 63, 94, 0.3);
+}
+
+.otp-timer-row {
+  text-align: center;
+}
+
+.otp-timer-text {
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+.otp-resend-btn {
+  background: transparent;
+  border: none;
+  color: var(--color-primary);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.otp-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 100%;
+}
+
+.otp-submit-btn {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  background: var(--gradient-hero);
+  border: none;
+  border-radius: var(--radius-md);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  box-shadow: 0 4px 15px var(--color-primary-glow);
+}
+
+.otp-submit-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.otp-cancel-btn {
+  width: 100%;
+  padding: var(--space-2);
+  background: transparent;
+  border: none;
+  color: var(--color-text-muted);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color var(--transition-fast);
+}
+
+.otp-cancel-btn:hover {
+  color: var(--color-text-primary);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   HOME PAGE — PROFESSIONAL UPGRADE STYLES
+   All 14 improvements added below
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── 1. Scroll Reveal ────────────────────────────────────────────────────── */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.scroll-reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── 2. SaaS Hero Section ────────────────────────────────────────────────── */
+.home-hero-saas {
+  width: 100%;
+  max-width: 960px;
+  margin-bottom: var(--space-10);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-5);
+  animation: slideUp 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  padding-top: var(--space-8);
+}
+
+.home-welcome-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 16px;
+  background: rgba(136, 192, 208, 0.08);
+  border: 1px solid rgba(136, 192, 208, 0.25);
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+.home-welcome-pill strong {
+  color: var(--color-text-primary);
+}
+
+.home-hero-saas-title {
+  font-size: clamp(32px, 5.5vw, 58px);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -2px;
+  color: var(--color-text-primary);
+  max-width: 700px;
+}
+
+/* ── 3. Typewriter ───────────────────────────────────────────────────────── */
+.home-hero-saas-sub {
+  font-size: 18px;
+  color: var(--color-primary);
+  font-family: var(--font-mono);
+  font-weight: 600;
+  min-height: 28px;
+  letter-spacing: -0.3px;
+}
+.typewriter-text {
+  /* text stays inline */
+}
+.typewriter-caret {
+  display: inline-block;
+  width: 2px;
+  margin-left: 2px;
+  color: var(--color-primary);
+  animation: blink-caret 0.75s step-end infinite;
+}
+@keyframes blink-caret {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* ── 4. Above-Fold CTA Row ───────────────────────────────────────────────── */
+.home-hero-cta-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: var(--space-3);
+}
+
+.home-cta-btn-primary {
+  padding: var(--space-4) var(--space-8) !important;
+  font-size: 16px !important;
+  box-shadow: 0 0 30px var(--color-primary-glow), 0 4px 15px rgba(0,0,0,0.3) !important;
+}
+.home-cta-btn-primary:hover {
+  box-shadow: 0 0 50px var(--color-primary-glow), 0 8px 25px rgba(0,0,0,0.4) !important;
+}
+
+.home-cta-btn-ghost {
+  padding: var(--space-4) var(--space-6) !important;
+  font-size: 15px !important;
+  background: transparent !important;
+  border: 1px solid var(--color-border) !important;
+  color: var(--color-text-secondary) !important;
+  box-shadow: none !important;
+}
+.home-cta-btn-ghost:hover {
+  border-color: var(--color-border-hover) !important;
+  color: var(--color-text-primary) !important;
+  background: rgba(255,255,255,0.03) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* ── 5. Pulsing CTA Button ───────────────────────────────────────────────── */
+.home-cta-btn-pulse {
+  animation: ctaPulse 2.5s ease-in-out infinite;
+}
+@keyframes ctaPulse {
+  0%, 100% { box-shadow: 0 4px 15px var(--color-primary-glow), 0 0 0 0 var(--color-primary-glow); }
+  50% { box-shadow: 0 4px 15px var(--color-primary-glow), 0 0 0 10px transparent; }
+}
+
+/* ── 6. Tech Badge Strip ─────────────────────────────────────────────────── */
+.tech-strip {
+  width: 100%;
+  max-width: 960px;
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  margin-bottom: var(--space-10);
+  padding: var(--space-4) var(--space-6);
+  background: var(--badge-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow-x: auto;
+  flex-wrap: wrap;
+  animation: slideUp 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.tech-strip-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.tech-strip-badges {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+.tech-strip-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  background: var(--gradient-card);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--badge-color, var(--color-text-secondary));
+  white-space: nowrap;
+  transition: all var(--transition-fast);
+}
+.tech-strip-badge:hover {
+  border-color: var(--badge-color, var(--color-border-hover));
+  box-shadow: 0 0 10px color-mix(in srgb, var(--badge-color, transparent) 25%, transparent);
+  transform: translateY(-1px);
+}
+.tech-strip-icon {
+  font-size: 14px;
+}
+
+/* ── 7. Primary Action Card Variant ─────────────────────────────────────── */
+.home-action-card-primary {
+  border-color: var(--color-primary) !important;
+  background: linear-gradient(145deg,
+    rgba(136, 192, 208, 0.08) 0%,
+    rgba(136, 192, 208, 0.03) 100%) !important;
+  box-shadow: 0 0 30px rgba(136, 192, 208, 0.1), var(--card-shadow) !important;
+  position: relative;
+}
+.home-action-card-primary::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-lg);
+  background: radial-gradient(ellipse at top left, rgba(136,192,208,0.12) 0%, transparent 60%);
+  pointer-events: none;
+}
+.home-action-card-primary:hover {
+  box-shadow: 0 0 50px rgba(136, 192, 208, 0.2), 0 16px 40px rgba(0,0,0,0.3) !important;
+}
+.home-action-primary-badge {
+  position: absolute;
+  top: -1px;
+  right: 14px;
+  padding: 3px 10px;
+  background: var(--gradient-hero);
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: #fff;
+  box-shadow: 0 2px 8px var(--color-primary-glow);
+  z-index: 1;
+}
+
+/* ── 8. Ecosystem Grid — 4 Columns ──────────────────────────────────────── */
+/* Override the existing 8-column grid */
+.home-ecosystems-grid {
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: var(--space-4) !important;
+}
+.home-ecosystem-chip {
+  padding: var(--space-5) var(--space-4) !important;
+}
+.home-ecosystem-icon {
+  margin-bottom: 4px;
+}
+@media (max-width: 600px) {
+  .home-ecosystems-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* ── 9. Syntax Highlighting ──────────────────────────────────────────────── */
+.syn-kw { color: #c792ea; font-weight: 700; }   /* keywords: FROM, RUN, COPY… */
+.syn-st { color: #c3e88d; }                      /* strings */
+.syn-cm { color: #546e7a; font-style: italic; }  /* comments */
+.syn-kv { color: #82aaff; font-weight: 600; }    /* YAML keys */
+.syn-nu { color: #f78c6c; }                      /* numbers */
+
+/* ── 10. Benchmark Feature List ──────────────────────────────────────────── */
+.bm-feat-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 4px 0;
+}
+.bm-feat {
+  font-size: 12px;
+  font-weight: 500;
+}
+.bm-no { color: var(--color-error); opacity: 0.85; }
+.bm-yes { color: var(--color-success); }
+.benchmark-stat-bad { color: var(--color-error) !important; }
+.benchmark-stat-good { color: var(--color-primary) !important; }
+
+/* ── 11. CTA Banner Upgrade ──────────────────────────────────────────────── */
+.home-cta-banner {
+  background: linear-gradient(135deg,
+    rgba(136, 192, 208, 0.12) 0%,
+    rgba(129, 161, 193, 0.08) 50%,
+    rgba(167, 139, 250, 0.06) 100%) !important;
+  border: 1px solid rgba(136, 192, 208, 0.3) !important;
+  box-shadow: 0 0 60px rgba(136, 192, 208, 0.08), 0 20px 50px rgba(0,0,0,0.2) !important;
+}
+
+/* ── 12. Rich Footer ─────────────────────────────────────────────────────── */
+.footer-rich {
+  border-top: 1px solid var(--color-border);
+  margin-top: var(--space-4);
+  background: var(--sidebar-bg);
+  position: relative;
+  z-index: 1;
+}
+.footer-rich-inner {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-10);
+  max-width: 960px;
+  margin: 0 auto;
+  padding: var(--space-10) var(--space-6) var(--space-8);
+  flex-wrap: wrap;
+}
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  max-width: 280px;
+}
+.footer-logo-text {
+  font-size: 18px;
+  font-weight: 800;
+  background: var(--gradient-hero);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.5px;
+}
+.footer-tagline {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+.footer-powered {
+  font-size: 11px;
+  color: var(--color-text-muted);
+}
+.footer-powered span {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+.footer-nav-cols {
+  display: flex;
+  gap: var(--space-10);
+  flex-wrap: wrap;
+}
+.footer-nav-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.footer-nav-heading {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--color-text-muted);
+  margin-bottom: 4px;
+}
+.footer-nav-link {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+.footer-nav-link:hover {
+  color: var(--color-text-primary);
+}
+.footer-bottom {
+  border-top: 1px solid var(--color-border);
+  padding: var(--space-4) var(--space-6);
+  text-align: center;
+  font-size: 12px;
+  color: var(--color-text-muted);
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+/* ── Mobile responsiveness for new sections ──────────────────────────────── */
+@media (max-width: 768px) {
+  .home-hero-saas-title {
+    letter-spacing: -1px;
+  }
+  .home-hero-cta-row {
+    flex-direction: column;
+    width: 100%;
+  }
+  .home-hero-cta-row .home-cta-btn {
+    width: 100%;
+    justify-content: center;
+  }
+  .tech-strip {
+    gap: var(--space-3);
+  }
+  .footer-rich-inner {
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+  .footer-nav-cols {
+    gap: var(--space-6);
+  }
+  .home-cta-banner {
+    flex-direction: column !important;
+    text-align: center;
+  }
+  .home-cta-content {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+

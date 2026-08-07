@@ -34,6 +34,10 @@ export default function BlueprintViewer({ files }) {
   const getFileIcon = (name) => {
     if (name.includes('Dockerfile')) return '🐳';
     if (name.includes('docker-compose')) return '🐙';
+    if (name.includes('k8s')) return '☸️';
+    if (name.includes('fly.toml')) return '🎈';
+    if (name.includes('render.yaml')) return '🌐';
+    if (name.includes('.env')) return '🔑';
     if (name.includes('dockerignore')) return '🚫';
     if (name.includes('README')) return '📘';
     return '📄';
