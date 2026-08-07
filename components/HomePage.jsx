@@ -302,8 +302,8 @@ function BenchmarkSection() {
           </div>
         </div>
         <div className="benchmark-divider"><span>VS</span></div>
-        <div className="benchmark-column dockeryze">
-          <div className="benchmark-badge success">Dockeryze AI Engine</div>
+        <div className="benchmark-column AutoDock">
+          <div className="benchmark-badge success">AutoDock AI Engine</div>
           <div className="benchmark-stat benchmark-stat-good">&lt; 8 Seconds</div>
           <p className="benchmark-desc">Manifest scanning, RAG LTS recipe matching, multi-stage Alpine builds.</p>
           <div className="bm-feat-list">
@@ -313,7 +313,7 @@ function BenchmarkSection() {
             <span className="bm-feat bm-yes">✅ LTS best practices</span>
           </div>
           <div className="benchmark-bar-wrap">
-            <div className="benchmark-bar dockeryze-bar" style={{ width: visible ? '14%' : '0%' }} />
+            <div className="benchmark-bar AutoDock-bar" style={{ width: visible ? '14%' : '0%' }} />
           </div>
         </div>
       </div>
@@ -498,7 +498,7 @@ export default function HomePage({ session }) {
             ref={benchReveal.ref}
             aria-label="Performance Benchmark"
           >
-            <h2 className="home-section-title">📊 Why Developers Choose Dockeryze</h2>
+            <h2 className="home-section-title">📊 Why Developers Choose AutoDock</h2>
             <BenchmarkSection />
           </section>
 
@@ -510,7 +510,7 @@ export default function HomePage({ session }) {
           >
             <div className="home-cta-content">
               <div className="home-cta-icon">
-                <img src="/dockeryze-icon.png?v=3" alt="Dockeryze Logo" width={52} height={52} style={{ borderRadius: '10px' }} />
+                <img src="/AutoDock-icon.png?v=3" alt="AutoDock Logo" width={52} height={52} style={{ borderRadius: '10px' }} />
               </div>
               <div className="home-cta-text">
                 <h3 className="home-cta-title">Ready to containerize your project?</h3>
@@ -530,8 +530,8 @@ export default function HomePage({ session }) {
           <div className="footer-rich-inner">
             <div className="footer-brand">
               <span className="footer-logo-text" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                <img src="/dockeryze-icon.png?v=3" alt="Dockeryze Logo" width={28} height={28} style={{ borderRadius: '6px' }} />
-                Dockeryze
+                <img src="/AutoDock-icon.png?v=3" alt="AutoDock Logo" width={28} height={28} style={{ borderRadius: '6px' }} />
+                AutoDock
               </span>
               <p className="footer-tagline">AI-powered containerization for modern developers.</p>
               <p className="footer-powered">Powered by <span>Gemini 2.0</span> &amp; Cosine RAG Vector DB</p>
@@ -552,7 +552,7 @@ export default function HomePage({ session }) {
             </nav>
           </div>
           <div className="footer-bottom">
-            <span>Dockeryze &copy; {new Date().getFullYear()} — All rights reserved.</span>
+            <span>AutoDock &copy; {new Date().getFullYear()} — All rights reserved.</span>
           </div>
         </footer>
       </div>

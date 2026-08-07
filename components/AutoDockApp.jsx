@@ -34,7 +34,7 @@ const TECH_BADGES = [
   { label: 'Shredder', Icon: ShredderIcon },
 ];
 
-export default function DockeryzeApp({ session }) {
+export default function AutoDockApp({ session }) {
   const [file, setFile] = useState(null);
   const [status, setStatus] = useState('idle'); // idle | uploading | extracting | scanning | searching | analyzing | compiling | success | error
   const [errorMessage, setErrorMessage] = useState('');
@@ -151,7 +151,7 @@ export default function DockeryzeApp({ session }) {
       // Trigger auto-download
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'dockeryze-blueprint.zip';
+      a.download = 'AutoDock-blueprint.zip';
       document.body.appendChild(a);
       a.click();
       a.remove();
@@ -209,7 +209,7 @@ export default function DockeryzeApp({ session }) {
             <div className="glass-card">
               <h3 className="card-title">📦 Workspace Dropzone</h3>
               <p style={{ fontSize: '13px', color: 'var(--color-text-secondary)', marginBottom: '20px' }}>
-                Drop your workspace repository zip. Dockeryze processes manifests securely.
+                Drop your workspace repository zip. AutoDock processes manifests securely.
               </p>
 
               <Dropzone
@@ -219,7 +219,7 @@ export default function DockeryzeApp({ session }) {
               />
 
               {status === 'success' && downloadUrl && (
-                <a href={downloadUrl} download="dockeryze-blueprint.zip" className="action-btn" style={{ background: 'var(--color-success)', boxShadow: '0 4px 15px var(--color-success-glow)' }}>
+                <a href={downloadUrl} download="AutoDock-blueprint.zip" className="action-btn" style={{ background: 'var(--color-success)', boxShadow: '0 4px 15px var(--color-success-glow)' }}>
                   📥 Download Blueprint Again
                 </a>
               )}
@@ -294,7 +294,7 @@ export default function DockeryzeApp({ session }) {
         {/* Footer copyright */}
         <footer className="footer" role="contentinfo">
           <div className="nav-container">
-            <p>Powered by <span>Gemini 2.0</span> &amp; Cosine RAG Vector DB · Dockeryze &copy; {new Date().getFullYear()}</p>
+            <p>Powered by <span>Gemini 2.0</span> &amp; Cosine RAG Vector DB · AutoDock &copy; {new Date().getFullYear()}</p>
           </div>
         </footer>
       </div>

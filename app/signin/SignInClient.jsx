@@ -8,9 +8,9 @@ export default function SignInClient({ handleGoogleSignIn, handleGitHubSignIn, h
       {/* Logo */}
       <div className="signin-header">
         <div className="nav-logo-icon" aria-hidden="true" style={{ width: '52px', height: '52px', borderRadius: '10px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <img src="/dockeryze-icon.png?v=3" alt="" width={52} height={52} style={{ borderRadius: '10px', objectFit: 'cover' }} />
+          <img src="/AutoDock-icon.png?v=3" alt="" width={52} height={52} style={{ borderRadius: '10px', objectFit: 'cover' }} />
         </div>
-        <h1 className="signin-title">Welcome to Dockeryze</h1>
+        <h1 className="signin-title">Welcome to AutoDock</h1>
         <p className="signin-subtitle">
           Sign in to access your Docker &amp; Compose environment
         </p>
@@ -77,8 +77,8 @@ export default function SignInClient({ handleGoogleSignIn, handleGitHubSignIn, h
           <input
             type="password"
             name="password"
-            defaultValue="dockeryze"
-            placeholder="Password (dockeryze)"
+            defaultValue="AutoDock"
+            placeholder="Password (AutoDock)"
             required
             className="signin-input"
           />

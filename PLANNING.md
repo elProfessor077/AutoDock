@@ -1,12 +1,12 @@
-# Dockeryze v2.0 — Implementation Plan & Feature Roadmap
+# AutoDock v2.0 — Implementation Plan & Feature Roadmap
 
-This document outlines the architecture plan, current implementation milestones, and upcoming development roadmap for **Dockeryze v2.0**.
+This document outlines the architecture plan, current implementation milestones, and upcoming development roadmap for **AutoDock v2.0**.
 
 ---
 
 ## 🎯 Project Overview & Goal
 
-Dockeryze simplifies containerization by converting raw source code repositories into optimized, multi-stage Dockerfiles and `docker-compose.yml` blueprints using hybrid AI (OpenAI GPT + RAG) and offline rule-based analysis.
+AutoDock simplifies containerization by converting raw source code repositories into optimized, multi-stage Dockerfiles and `docker-compose.yml` blueprints using hybrid AI (OpenAI GPT + RAG) and offline rule-based analysis.
 
 ---
 
@@ -26,7 +26,7 @@ Dockeryze simplifies containerization by converting raw source code repositories
 - [x] **In-Memory Streaming Archiver (`lib/archiver.js`)**: Real-time ZIP archiving and stream delivery.
 
 ### Phase 3: Frontend Workspace & Utilities (Completed ✅)
-- [x] **Interactive Workspace UI (`DockeryzeApp.jsx`)**: Drag-and-drop archive upload, live parameter customization, code tab preview, and single-click ZIP downloading.
+- [x] **Interactive Workspace UI (`AutoDockApp.jsx`)**: Drag-and-drop archive upload, live parameter customization, code tab preview, and single-click ZIP downloading.
 - [x] **In-Browser Folder-to-ZIP Tool (`FolderToZipConverter.jsx`)**: Client-side archiving with automatic `node_modules`, `.git`, and build artifact exclusion.
 - [x] **Security Shield Dashboard (`SecurityShield.jsx`)**: Real-time display of security policies, upload constraints, and file isolation status.
 - [x] **Architecture Pipeline Visualizer (`PipelineVisualizer.jsx`)**: Step-by-step visual workflow representation.
@@ -63,4 +63,4 @@ Dockeryze simplifies containerization by converting raw source code repositories
 - **Generation Speed**: Local mode < 500ms; AI RAG mode < 3s.
 
 ---
-*Dockeryze v2.0 Planning Document*
+*AutoDock v2.0 Planning Document*

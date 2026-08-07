@@ -1,6 +1,6 @@
 <div align="center">
 
-  # 🐳 Dockeryze
+  # 🐳 AutoDock
   ### *AI-Powered Instant Docker & Compose Blueprint Generator*
 
   [![Next.js](https://img.shields.io/badge/Next.js-16.2-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
@@ -66,7 +66,7 @@
 │   └── signin/page.js           # Multi-provider login screen
 │
 ├── components/                  # React UI Components
-│   ├── DockeryzeApp.jsx         # Primary blueprint workspace state manager
+│   ├── AutoDockApp.jsx         # Primary blueprint workspace state manager
 │   ├── BlueprintViewer.jsx      # Code viewer with tabbed navigation & copy controls
 │   ├── FolderToZipConverter.jsx # JSZip folder archiving utility
 │   ├── PipelineVisualizer.jsx   # Interactive architecture flow
@@ -134,13 +134,13 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-> **Developer Bypass**: You can log in using Username: `developer` and Password: `dockeryze`.
+> **Developer Bypass**: You can log in using Username: `developer` and Password: `AutoDock`.
 
 ---
 
 ## 🐳 Docker Deployment
 
-You can run the entire Dockeryze stack using Docker Compose:
+You can run the entire AutoDock stack using Docker Compose:
 
 ```bash
 docker-compose up -d --build

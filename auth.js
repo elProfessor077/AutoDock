@@ -20,8 +20,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         password: { label: "Password", type: "password" }
       },
       async authorize(credentials) {
-        if (credentials?.username === "developer" && credentials?.password === "dockeryze") {
-          return { id: "dev-user", name: "Dev Guest", email: "developer@dockeryze.local" };
+        if (credentials?.username === "developer" && credentials?.password === "AutoDock") {
+          return { id: "dev-user", name: "Dev Guest", email: "developer@AutoDock.local" };
         }
         return null;
       }

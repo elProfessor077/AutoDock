@@ -112,7 +112,7 @@ export async function POST(request) {
       status: 200,
       headers: {
         'Content-Type': 'application/zip',
-        'Content-Disposition': 'attachment; filename="dockeryze-blueprint.zip"',
+        'Content-Disposition': 'attachment; filename="AutoDock-blueprint.zip"',
         'X-Cache': cacheStatus,
         'X-Manifest-Hash': manifestHash.slice(0, 16),
       },

@@ -1,7 +1,7 @@
 import { auth } from "@/auth";
 import dynamic from 'next/dynamic';
 
-const DockeryzeApp = dynamic(() => import('@/components/DockeryzeApp'), {
+const AutoDockApp = dynamic(() => import('@/components/AutoDockApp'), {
   loading: () => (
     <div style={{ padding: '60px 24px', textAlign: 'center', color: 'var(--color-text-muted)' }}>
       🚀 Loading Workspace Engine...
@@ -10,11 +10,11 @@ const DockeryzeApp = dynamic(() => import('@/components/DockeryzeApp'), {
 });
 
 export const metadata = {
-  title: '🔧 Workspace — Dockeryze',
+  title: '🔧 Workspace — AutoDock',
   description: 'Upload your project archive and generate AI-powered Docker deployment blueprints.',
 };
 
 export default async function WorkspacePage() {
   const session = await auth();
-  return <DockeryzeApp session={session} />;
+  return <AutoDockApp session={session} />;
 }

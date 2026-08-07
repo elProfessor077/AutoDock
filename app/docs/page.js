@@ -2,8 +2,8 @@ import { auth } from "@/auth";
 import Sidebar from '@/components/Sidebar';
 
 export const metadata = {
-  title: '📚 Documentation — Dockeryze',
-  description: 'Understand how Dockeryze works and critical security precautions to take during containerization.',
+  title: '📚 Documentation — AutoDock',
+  description: 'Understand how AutoDock works and critical security precautions to take during containerization.',
 };
 
 export default async function DocsPage() {
@@ -41,7 +41,7 @@ export default async function DocsPage() {
                 ⚙️ How It Works
               </h2>
               <p style={{ color: 'var(--color-text-secondary)', fontSize: '15px', lineHeight: '1.7', marginBottom: '20px' }}>
-                Dockeryze simplifies containerization by scanning project manifests and building optimized blueprints using RAG (Retrieval-Augmented Generation) and Gemini 2.0.
+                AutoDock simplifies containerization by scanning project manifests and building optimized blueprints using RAG (Retrieval-Augmented Generation) and Gemini 2.0.
               </p>
               
               <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
@@ -55,7 +55,7 @@ export default async function DocsPage() {
                 <div style={{ paddingLeft: '15px', borderLeft: '3px solid var(--color-primary)' }}>
                   <h3 style={{ fontSize: '16px', fontWeight: '700', marginBottom: '5px' }}>2. Manifest Scan & RAG Query</h3>
                   <p style={{ fontSize: '13px', color: 'var(--color-text-secondary)' }}>
-                    Dockeryze parses workspace manifests (e.g., `package.json`, `requirements.txt`, `go.mod`, etc.) and queries our vector database for matching LTS (Long Term Support) base images.
+                    AutoDock parses workspace manifests (e.g., `package.json`, `requirements.txt`, `go.mod`, etc.) and queries our vector database for matching LTS (Long Term Support) base images.
                   </p>
                 </div>
 
@@ -81,7 +81,7 @@ export default async function DocsPage() {
                 🛡️ Security Concerns & Best Practices
               </h2>
               <p style={{ color: 'var(--color-text-secondary)', fontSize: '15px', lineHeight: '1.7', marginBottom: '20px' }}>
-                While Dockeryze goes to extreme lengths to handle your data securely, users must practice standard hygiene to avoid exposure.
+                While AutoDock goes to extreme lengths to handle your data securely, users must practice standard hygiene to avoid exposure.
               </p>
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '20px' }}>
@@ -99,7 +99,7 @@ export default async function DocsPage() {
                     📦 Manifest-focused Analysis
                   </h3>
                   <p style={{ fontSize: '13px', color: 'var(--color-text-secondary)', lineHeight: '1.6' }}>
-                    Dockeryze's pipeline only inspects code structure and build manifests to identify ecosystems and libraries. It does not parse application business logic or database values.
+                    AutoDock's pipeline only inspects code structure and build manifests to identify ecosystems and libraries. It does not parse application business logic or database values.
                   </p>
                 </div>
 
@@ -141,7 +141,7 @@ export default async function DocsPage() {
         {/* Footer */}
         <footer className="footer" role="contentinfo">
           <div className="nav-container">
-            <p>Powered by <span>Gemini 2.0</span> &amp; Cosine RAG Vector DB · Dockeryze &copy; {new Date().getFullYear()}</p>
+            <p>Powered by <span>Gemini 2.0</span> &amp; Cosine RAG Vector DB · AutoDock &copy; {new Date().getFullYear()}</p>
           </div>
         </footer>
       </div>

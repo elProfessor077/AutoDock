@@ -3,7 +3,7 @@ import Sidebar from '@/components/Sidebar';
 import FolderToZipConverter from '@/components/FolderToZipConverter';
 
 export const metadata = {
-  title: '📦 Folder to ZIP Converter — Dockeryze',
+  title: '📦 Folder to ZIP Converter — AutoDock',
   description: 'Convert any folder or repository directly into a clean compressed ZIP archive with smart node_modules and build artifact filters.',
 };
 
@@ -40,7 +40,7 @@ export default async function FolderToZipPage() {
         {/* Footer */}
         <footer className="footer" role="contentinfo">
           <div className="nav-container">
-            <p>Powered by <span>Gemini 2.0</span> &amp; Cosine RAG Vector DB · Dockeryze &copy; {new Date().getFullYear()}</p>
+            <p>Powered by <span>Gemini 2.0</span> &amp; Cosine RAG Vector DB · AutoDock &copy; {new Date().getFullYear()}</p>
           </div>
         </footer>
       </div>

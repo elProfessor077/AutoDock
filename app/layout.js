@@ -15,23 +15,23 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata = {
-  title: 'Dockeryze — Instant Docker & Compose Blueprints',
-  description: 'Upload your project archive. Dockeryze reads manifests, retrieves verified RAG recipes, maps configurations with Google Gemini, and delivers optimized Docker configurations instantly.',
+  title: 'AutoDock — Instant Docker & Compose Blueprints',
+  description: 'Upload your project archive. AutoDock reads manifests, retrieves verified RAG recipes, maps configurations with Google Gemini, and delivers optimized Docker configurations instantly.',
   keywords: 'Docker, docker-compose, DevOps, Next.js, Express, Go, Python, RAG, Gemini AI, automated containerization',
   icons: {
-    icon: '/dockeryze-icon.png',
-    shortcut: '/dockeryze-icon.png',
-    apple: '/dockeryze-icon.png',
+    icon: '/AutoDock-icon.png',
+    shortcut: '/AutoDock-icon.png',
+    apple: '/AutoDock-icon.png',
   },
   openGraph: {
-    title: 'Dockeryze — AI-Powered Docker Blueprint Generator',
+    title: 'AutoDock — AI-Powered Docker Blueprint Generator',
     description: 'Ship container-ready code in seconds. Upload your project, get production-ready Dockerfiles & docker-compose configs instantly.',
     type: 'website',
-    siteName: 'Dockeryze',
+    siteName: 'AutoDock',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Dockeryze — Instant Docker & Compose Blueprints',
+    title: 'AutoDock — Instant Docker & Compose Blueprints',
     description: 'AI-powered containerization: upload your project archive and get optimized Docker blueprints in under 8 seconds.',
   },
 };

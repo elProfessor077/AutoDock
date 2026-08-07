@@ -23,7 +23,7 @@ export default function OtpVerificationCard({ provider, email, onVerified, onCan
   // Generate TOTP secret & QR code on mount
   useEffect(() => {
     async function initTotp() {
-      const data = await generateTotpSecret(email, 'Dockeryze');
+      const data = await generateTotpSecret(email, 'AutoDock');
       setTotpData(data);
       if (data.secret) {
         setLiveTotp(getCurrentTotpToken(data.secret));

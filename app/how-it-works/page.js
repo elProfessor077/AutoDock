@@ -3,8 +3,8 @@ import FeatureGrid from '@/components/FeatureGrid';
 import Sidebar from '@/components/Sidebar';
 
 export const metadata = {
-  title: '⚙️ How It Works — Dockeryze',
-  description: 'Learn how Dockeryze transforms your project archive into production-ready Docker & Compose blueprints in three simple steps.',
+  title: '⚙️ How It Works — AutoDock',
+  description: 'Learn how AutoDock transforms your project archive into production-ready Docker & Compose blueprints in three simple steps.',
 };
 
 export default async function HowItWorksPage() {
@@ -27,7 +27,7 @@ export default async function HowItWorksPage() {
         <main className="app-container" id="main-content">
           <section className="hero" aria-labelledby="how-it-works-title" style={{ marginBottom: '24px' }}>
             <h1 id="how-it-works-title" className="hero-title">
-              Under the Hood of <span className="gradient-text">Dockeryze</span>
+              Under the Hood of <span className="gradient-text">AutoDock</span>
             </h1>
             <p className="hero-subtitle">
               From repository submission to production-hardened containers — discover our 3-stage intelligence pipeline powered by manifest scanning, RAG vector retrieval, and Gemini 2.0.
@@ -40,7 +40,7 @@ export default async function HowItWorksPage() {
         {/* Footer */}
         <footer className="footer" role="contentinfo">
           <div className="nav-container">
-            <p>Powered by <span>Gemini 2.0</span> &amp; Cosine RAG Vector DB · Dockeryze &copy; {new Date().getFullYear()}</p>
+            <p>Powered by <span>Gemini 2.0</span> &amp; Cosine RAG Vector DB · AutoDock &copy; {new Date().getFullYear()}</p>
           </div>
         </footer>
       </div>

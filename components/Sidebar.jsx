@@ -25,14 +25,14 @@ export default function Sidebar({ session, activePath }) {
           <a href="/" className="top-header-logo">
             <div className="nav-logo-icon" aria-hidden="true" style={{ background: 'transparent', boxShadow: 'none' }}>
               <img
-                src="/dockeryze-icon.png?v=3"
-                alt="Dockeryze Logo"
+                src="/AutoDock-icon.png?v=3"
+                alt="AutoDock Logo"
                 width={28}
                 height={28}
                 style={{ borderRadius: '6px', objectFit: 'cover' }}
               />
             </div>
-            <span className="nav-logo-text">Dockeryze</span>
+            <span className="nav-logo-text">AutoDock</span>
           </a>
         </div>
 

@@ -161,7 +161,7 @@ export default function PipelineVisualizer({ currentState }) {
             <span className="control-dot minimize" />
             <span className="control-dot maximize" />
           </div>
-          <span className="terminal-title">dockeryze-orchestrator.sh</span>
+          <span className="terminal-title">AutoDock-orchestrator.sh</span>
           <span style={{ width: '42px' }} />
         </div>
         

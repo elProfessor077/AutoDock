@@ -3,12 +3,12 @@
 import React from 'react';
 
 const MATRIX = [
-  { feature: 'Interface Type', init: 'Terminal / CLI', dockeryze: 'Visual Drag-and-Drop' },
-  { feature: 'Engine Type', init: 'Hardcoded Templates', dockeryze: 'Gemini AI + RAG Vector Engine' },
-  { feature: 'LTS Tag Accuracy', init: '❌ Static / Outdated', dockeryze: '✅ RAG-Verified Active LTS Tags' },
-  { feature: 'Database Setup', init: '❌ Manual / Missing', dockeryze: '✅ Auto-Generated & Pre-Wired' },
-  { feature: 'Security Shielding', init: '❌ None (Assumes Safe)', dockeryze: '✅ Zip Slip Shield & 10MB Guard' },
-  { feature: 'Memory Scrubbing', init: '❌ None', dockeryze: '✅ Instant Ephemeral Shredder' },
+  { feature: 'Interface Type', init: 'Terminal / CLI', AutoDock: 'Visual Drag-and-Drop' },
+  { feature: 'Engine Type', init: 'Hardcoded Templates', AutoDock: 'Gemini AI + RAG Vector Engine' },
+  { feature: 'LTS Tag Accuracy', init: '❌ Static / Outdated', AutoDock: '✅ RAG-Verified Active LTS Tags' },
+  { feature: 'Database Setup', init: '❌ Manual / Missing', AutoDock: '✅ Auto-Generated & Pre-Wired' },
+  { feature: 'Security Shielding', init: '❌ None (Assumes Safe)', AutoDock: '✅ Zip Slip Shield & 10MB Guard' },
+  { feature: 'Memory Scrubbing', init: '❌ None', AutoDock: '✅ Instant Ephemeral Shredder' },
 ];
 
 export default function ComparisonTable() {
@@ -23,8 +23,8 @@ export default function ComparisonTable() {
               <th>docker init (Official)</th>
               <th>
                 <span style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
-                  <img src="/dockeryze-icon.png?v=3" alt="Dockeryze Logo" width={22} height={22} style={{ borderRadius: '4px' }} />
-                  Dockeryze AI
+                  <img src="/AutoDock-icon.png?v=3" alt="AutoDock Logo" width={22} height={22} style={{ borderRadius: '4px' }} />
+                  AutoDock AI
                 </span>
               </th>
             </tr>
@@ -34,7 +34,7 @@ export default function ComparisonTable() {
               <tr key={idx}>
                 <td>{row.feature}</td>
                 <td>{row.init}</td>
-                <td style={{ color: 'var(--color-cyan)', fontWeight: 'bold' }}>{row.dockeryze}</td>
+                <td style={{ color: 'var(--color-cyan)', fontWeight: 'bold' }}>{row.AutoDock}</td>
               </tr>
             ))}
           </tbody>

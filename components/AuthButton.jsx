@@ -32,7 +32,7 @@ export default function AuthButton({ session }) {
   }, []);
 
   const userName = session?.user?.name || session?.user?.email?.split('@')[0] || 'Developer';
-  const userEmail = session?.user?.email || 'guest@dockeryze.local';
+  const userEmail = session?.user?.email || 'guest@AutoDock.local';
   const userImage = session?.user?.image;
 
   return (

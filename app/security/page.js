@@ -3,8 +3,8 @@ import SecurityShield from '@/components/SecurityShield';
 import Sidebar from '@/components/Sidebar';
 
 export const metadata = {
-  title: '🔒 Security — Dockeryze',
-  description: 'Learn about Dockeryze\'s multi-layered security architecture: payload limits, Zip Slip protection, strict schema validation, and zero persistent storage.',
+  title: '🔒 Security — AutoDock',
+  description: 'Learn about AutoDock\'s multi-layered security architecture: payload limits, Zip Slip protection, strict schema validation, and zero persistent storage.',
 };
 
 export default async function SecurityPage() {
@@ -40,7 +40,7 @@ export default async function SecurityPage() {
         {/* Footer */}
         <footer className="footer" role="contentinfo">
           <div className="nav-container">
-            <p>Powered by <span>Gemini 2.0</span> &amp; Cosine RAG Vector DB · Dockeryze &copy; {new Date().getFullYear()}</p>
+            <p>Powered by <span>Gemini 2.0</span> &amp; Cosine RAG Vector DB · AutoDock &copy; {new Date().getFullYear()}</p>
           </div>
         </footer>
       </div>

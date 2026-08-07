@@ -10,7 +10,7 @@ export default function HeroSection() {
         <span className="gradient-text">Deployment Blueprints</span>
       </h1>
       <p className="hero-subtitle">
-        Upload your source repository archive (.zip). Dockeryze scans dependency manifests,
+        Upload your source repository archive (.zip). AutoDock scans dependency manifests,
         retrieves verified LTS base images from its RAG knowledge store, and generates
         production-ready Dockerfile &amp; docker-compose setups in seconds.
       </p>

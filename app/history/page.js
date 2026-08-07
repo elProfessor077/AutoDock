@@ -3,7 +3,7 @@ import Sidebar from '@/components/Sidebar';
 import HistoryList from '@/components/HistoryList';
 
 export const metadata = {
-  title: '📜 History — Dockeryze',
+  title: '📜 History — AutoDock',
   description: 'View your past blueprint generations, detected ecosystems, and re-download previous outputs.',
 };
 
@@ -40,7 +40,7 @@ export default async function HistoryPage() {
         {/* Footer */}
         <footer className="footer" role="contentinfo">
           <div className="nav-container">
-            <p>Powered by <span>Gemini 2.0</span> &amp; Cosine RAG Vector DB · Dockeryze &copy; {new Date().getFullYear()}</p>
+            <p>Powered by <span>Gemini 2.0</span> &amp; Cosine RAG Vector DB · AutoDock &copy; {new Date().getFullYear()}</p>
           </div>
         </footer>
       </div>

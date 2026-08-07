@@ -1,12 +1,12 @@
-# Dockeryze v2.0 — Architecture & Features Documentation
+# AutoDock v2.0 — Architecture & Features Documentation
 
-This document provides a comprehensive overview of **Dockeryze v2.0**, detailing all working files, application features, component breakdowns, and system architecture workflows.
+This document provides a comprehensive overview of **AutoDock v2.0**, detailing all working files, application features, component breakdowns, and system architecture workflows.
 
 ---
 
 ## 🏗️ System Architecture & Workflow
 
-Dockeryze is an AI-powered containerization engine that analyzes software project repositories and automatically generates production-ready Docker and Compose blueprints.
+AutoDock is an AI-powered containerization engine that analyzes software project repositories and automatically generates production-ready Docker and Compose blueprints.
 
 ```
 ┌─────────────────┐       ┌────────────────────┐       ┌────────────────────────┐
@@ -64,7 +64,7 @@ c:\prototype\
 │   ├── Sidebar.jsx              # Responsive navigation sidebar with active route state
 │   ├── AuthButton.jsx           # User authentication & session state button
 │   ├── HomePage.jsx             # Main dashboard UI with stats & quick action launchers
-│   ├── DockeryzeApp.jsx         # Primary blueprint generator workspace UI
+│   ├── AutoDockApp.jsx         # Primary blueprint generator workspace UI
 │   ├── FolderToZipConverter.jsx # Browser-side folder zipping utility (JSZip)
 │   ├── Dropzone.jsx             # Drag-and-drop zip file uploader component
 │   ├── BlueprintViewer.jsx      # Code viewer with tabbed file navigation & download controls
@@ -106,7 +106,7 @@ c:\prototype\
 
 | Feature | Description | File / Component Reference |
 | :--- | :--- | :--- |
-| **Instant Blueprint Generation** | Drag & drop zip upload to auto-generate Dockerfile, docker-compose, and README | [`DockeryzeApp.jsx`](file:///c:/prototype/components/DockeryzeApp.jsx), [`route.js`](file:///c:/prototype/app/api/analyze/route.js) |
+| **Instant Blueprint Generation** | Drag & drop zip upload to auto-generate Dockerfile, docker-compose, and README | [`AutoDockApp.jsx`](file:///c:/prototype/components/AutoDockApp.jsx), [`route.js`](file:///c:/prototype/app/api/analyze/route.js) |
 | **Client-Side Folder-to-ZIP** | Convert local project folders into clean ZIP archives in browser memory | [`FolderToZipConverter.jsx`](file:///c:/prototype/components/FolderToZipConverter.jsx) |
 | **Hybrid Analysis (AI + Offline)** | Dual-engine analyzer combining GPT/RAG with zero-dependency local rule matching | [`geminiPipeline.js`](file:///c:/prototype/lib/ai/geminiPipeline.js), [`localAnalyzer.js`](file:///c:/prototype/lib/ai/localAnalyzer.js) |
 | **Multi-Ecosystem Detection** | Support for Node.js, Python, Go, Rust, Java, Ruby, PHP, and major databases | [`manifestScanner.js`](file:///c:/prototype/lib/scanner/manifestScanner.js) |
@@ -114,8 +114,8 @@ c:\prototype\
 | **Digital Shredder** | Auto-purging of uploaded zip files and temporary sandbox directories post-compilation | [`cleanup.js`](file:///c:/prototype/lib/cleanup.js) |
 | **Live Blueprint Code Viewer** | Tabbed syntax viewer with copy-to-clipboard and single-click ZIP export | [`BlueprintViewer.jsx`](file:///c:/prototype/components/BlueprintViewer.jsx) |
 | **Generation History Log** | Stores recent blueprint generations locally for easy retrieval and re-downloading | [`HistoryList.jsx`](file:///c:/prototype/components/HistoryList.jsx) |
-| **Interactive Pipeline View** | Visual step-by-step breakdown of how Dockeryze processes code archives | [`PipelineVisualizer.jsx`](file:///c:/prototype/components/PipelineVisualizer.jsx) |
+| **Interactive Pipeline View** | Visual step-by-step breakdown of how AutoDock processes code archives | [`PipelineVisualizer.jsx`](file:///c:/prototype/components/PipelineVisualizer.jsx) |
 | **Multi-Provider Authentication** | GitHub, Google OAuth, and developer bypass credentials authentication | [`auth.js`](file:///c:/prototype/auth.js), [`signin/page.js`](file:///c:/prototype/app/signin/page.js) |
 
 ---
-*Generated for Dockeryze v2.0*
+*Generated for AutoDock v2.0*

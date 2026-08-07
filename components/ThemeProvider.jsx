@@ -14,7 +14,7 @@ export function ThemeProvider({ children }) {
 
   useEffect(() => {
     // Read saved theme from localStorage or fallback to dark
-    const savedTheme = localStorage.getItem('dockeryze-theme');
+    const savedTheme = localStorage.getItem('AutoDock-theme');
     if (savedTheme === 'light' || savedTheme === 'dark') {
       setThemeState(savedTheme);
       document.documentElement.setAttribute('data-theme', savedTheme);
@@ -29,7 +29,7 @@ export function ThemeProvider({ children }) {
 
   const setTheme = (newTheme) => {
     setThemeState(newTheme);
-    localStorage.setItem('dockeryze-theme', newTheme);
+    localStorage.setItem('AutoDock-theme', newTheme);
     document.documentElement.setAttribute('data-theme', newTheme);
   };
 

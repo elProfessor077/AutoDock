@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { EcosystemIcon } from './EcosystemIcons';
 
-const HISTORY_KEY = 'dockeryze-history';
+const HISTORY_KEY = 'AutoDock-history';
 
 /**
  * Retrieves pipeline history entries from localStorage.

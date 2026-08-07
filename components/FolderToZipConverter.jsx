@@ -436,7 +436,7 @@ export default function FolderToZipConverter() {
                   className="action-btn secondary"
                   style={{ flex: 1, minWidth: '200px', textAlign: 'center', textDecoration: 'none' }}
                 >
-                  🚀 Upload directly to Dockeryze
+                  🚀 Upload directly to AutoDock
                 </a>
               </div>
             ) : (

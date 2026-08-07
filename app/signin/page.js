@@ -2,8 +2,8 @@ import { signIn } from "@/auth";
 import SignInClient from "./SignInClient";
 
 export const metadata = {
-  title: '🔐 Sign In — Dockeryze',
-  description: 'Sign in to Dockeryze with 2-Factor OTP authentication.',
+  title: '🔐 Sign In — AutoDock',
+  description: 'Sign in to AutoDock with 2-Factor OTP authentication.',
 };
 
 export default function SignInPage() {

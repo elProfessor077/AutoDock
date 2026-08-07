@@ -2510,7 +2510,7 @@ body::before {
   background: var(--color-error);
 }
 
-.benchmark-bar.dockeryze-bar {
+.benchmark-bar.AutoDock-bar {
   background: var(--gradient-hero);
   box-shadow: 0 0 10px var(--color-primary-glow);
 }
