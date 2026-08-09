@@ -12,6 +12,7 @@ import BlueprintViewer from './BlueprintViewer';
 import SecurityAuditBadge from './SecurityAuditBadge';
 import SecretShieldBuilder from './SecretShieldBuilder';
 import DigitalTwinCard from './DigitalTwinCard';
+import BlueprintChat from './BlueprintChat';
 import { auditContainerSecurity } from '@/lib/security/auditor';
 import { saveHistoryEntry } from './HistoryList';
 import AuthButton from './AuthButton';
@@ -40,6 +41,16 @@ export default function AutoDockApp({ session }) {
   const [errorMessage, setErrorMessage] = useState('');
   const [downloadUrl, setDownloadUrl] = useState(null);
   const [blueprintFiles, setBlueprintFiles] = useState(null);
+
+  // AI Refinement Chat state
+  const [chatOpen, setChatOpen] = useState(false);
+  const [currentConfig, setCurrentConfig] = useState(null);
+
+  // Handle chat applying changes — hot-swap blueprint preview
+  const handleChatApply = useCallback((newBlueprints, updatedConfig) => {
+    setBlueprintFiles(newBlueprints);
+    setCurrentConfig(updatedConfig);
+  }, []);
 
   const handleFileChange = useCallback((selectedFile) => {
     setFile(selectedFile);
@@ -128,6 +139,35 @@ export default function AutoDockApp({ session }) {
           }
         }
         setBlueprintFiles(extracted);
+
+        // Try to extract config from blueprint README for chat context
+        const readmeContent = extracted['README.md'] || '';
+        const extractedConfig = {};
+        const ecoMatch = readmeContent.match(/Ecosystem[:\s]+(\w+)/i);
+        const verMatch = readmeContent.match(/Version[:\s]+([\d.]+)/i);
+        const imgMatch = readmeContent.match(/Base Image[:\s]+(\S+)/i);
+        const fwMatch = readmeContent.match(/Framework[:\s]+(\S+)/i);
+        const portMatch = readmeContent.match(/Internal Port[:\s]+(\d+)/i);
+        const dbMatch = readmeContent.match(/Wired Database[:\s]+(\S+)/i);
+
+        if (ecoMatch) extractedConfig.runtime = ecoMatch[1];
+        if (verMatch) extractedConfig.runtimeVersion = verMatch[1];
+        if (imgMatch) extractedConfig.baseImage = imgMatch[1];
+        if (fwMatch) extractedConfig.framework = fwMatch[1];
+        if (portMatch) extractedConfig.applicationPort = parseInt(portMatch[1], 10);
+        if (dbMatch) extractedConfig.database = dbMatch[1];
+
+        // Set defaults for required fields
+        extractedConfig.runtime = extractedConfig.runtime || 'nodejs';
+        extractedConfig.runtimeVersion = extractedConfig.runtimeVersion || '20';
+        extractedConfig.baseImage = extractedConfig.baseImage || 'node:20-alpine';
+        extractedConfig.database = extractedConfig.database || 'none';
+        extractedConfig.applicationPort = extractedConfig.applicationPort || 3000;
+        extractedConfig.framework = extractedConfig.framework || 'none';
+        extractedConfig.startCommand = extractedConfig.startCommand || 'node server.js';
+        extractedConfig.buildCommand = extractedConfig.buildCommand || '';
+
+        setCurrentConfig(extractedConfig);
       } catch (zipErr) {
         console.error('[Blueprint] Failed to unpack zip for preview:', zipErr);
       }
@@ -270,6 +310,7 @@ export default function AutoDockApp({ session }) {
               />
             )}
 
+
             {/* Unzipped Live Blueprint Folder Viewer */}
             {blueprintFiles && <BlueprintViewer files={blueprintFiles} />}
 
@@ -298,6 +339,31 @@ export default function AutoDockApp({ session }) {
           </div>
         </footer>
       </div>
+
+      {/* Floating AI Chat Bubble (FAB) */}
+      {blueprintFiles && currentConfig && !chatOpen && (
+        <button
+          className="chat-fab"
+          onClick={() => setChatOpen(true)}
+          aria-label="Open AI Refinement Chat"
+          title="AI Blueprint Refinement"
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+          </svg>
+          <span className="chat-fab-badge">✨</span>
+        </button>
+      )}
+
+      {/* AI Refinement Chat Drawer */}
+      {currentConfig && (
+        <BlueprintChat
+          isOpen={chatOpen}
+          onClose={() => setChatOpen(false)}
+          currentConfig={currentConfig}
+          onApplyChanges={handleChatApply}
+        />
+      )}
     </div>
   );
 }

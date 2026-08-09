@@ -19,7 +19,8 @@
 ## 🌟 Key Features
 
 - ⚡ **Instant Containerization**: Drag & drop project archives (`.zip`) to automatically generate optimized container blueprints.
-- 🤖 **Hybrid AI Engine**: Combines LLM structured JSON analysis with an in-memory **RAG Vector Knowledge Store** for pin-point LTS version selection.
+- 💬 **AI Blueprint Refinement Chatbot**: Floating interactive AI chat assistant to modify generated Dockerfiles & Compose configs in natural language (switch runtimes, add Redis/databases, adjust ports) without re-uploading archives.
+- 🤖 **Hybrid AI Engine (OpenAI + Gemini Fallback)**: Dual LLM integration with an in-memory **RAG Vector Knowledge Store** for pin-point LTS version selection and automatic provider fallback.
 - 🛡️ **Zero-Dependency Local Fallback**: Deterministic rule-based analyzer when working offline or without an API key.
 - 📦 **In-Browser Folder-to-ZIP**: Client-side project folder compression utility with intelligent filtering (`node_modules`, `.git`, `.next` exclusion).
 - 🔐 **Hardened Security Shield**: Protected by **Zip-Slip Attack Guard** (path sanitizer) and **Digital Shredder** (ephemeral temp file auto-cleanup).
@@ -41,12 +42,12 @@
 │ Downloadable    │ <───  │ Blueprint          │ <───  │ Hybrid AI / Local      │
 │ Blueprint ZIP   │       │ Multi-Template     │       │ Ecosystem Scanner      │
 └─────────────────┘       └────────────────────┘       └────────────────────────┘
-                                                                   │
-                                                                   ▼
-                                                       ┌────────────────────────┐
-                                                       │ Digital Shredder       │
-                                                       │ Auto-Purge Task        │
-                                                       └────────────────────────┘
+        ▲                                                          │
+        │                                                          ▼
+┌─────────────────┐                                    ┌────────────────────────┐
+│ AI Refinement   │                                    │ Digital Shredder       │
+│ Floating Chat   │                                    │ Auto-Purge Task        │
+└─────────────────┘                                    └────────────────────────┘
 ```
 
 ---
@@ -57,6 +58,7 @@
 .
 ├── app/                         # Next.js App Router
 │   ├── api/analyze/route.js     # Archive analysis & blueprint generation endpoint
+│   ├── api/chat/refine/route.js # AI Blueprint Refinement Chat endpoint (OpenAI + Gemini)
 │   ├── workspace/page.js        # Main Blueprint Workspace UI
 │   ├── folder-to-zip/page.js    # Client-side Folder-to-ZIP converter
 │   ├── how-it-works/page.js    # Architecture visualizer
@@ -67,6 +69,7 @@
 │
 ├── components/                  # React UI Components
 │   ├── AutoDockApp.jsx         # Primary blueprint workspace state manager
+│   ├── BlueprintChat.jsx       # Floating AI refinement chat drawer UI
 │   ├── BlueprintViewer.jsx      # Code viewer with tabbed navigation & copy controls
 │   ├── FolderToZipConverter.jsx # JSZip folder archiving utility
 │   ├── PipelineVisualizer.jsx   # Interactive architecture flow
@@ -116,8 +119,10 @@ AUTH_SECRET=your-random-32-byte-secret
 AUTH_TRUST_HOST=true
 NEXTAUTH_URL=http://localhost:3000
 
-# (Optional) AI Key for RAG-enhanced GPT analysis
+# AI Provider Keys (OpenAI GPT-4o-mini and/or Google Gemini 2.0 Flash)
 OPENAI_API_KEY=your-openai-api-key
+GEMINI_API_KEY=your-gemini-api-key
+```
 
 # (Optional) OAuth Provider Keys
 GOOGLE_CLIENT_ID=your-google-client-id
