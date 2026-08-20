@@ -24,15 +24,6 @@ const FAQS = [
   },
 ];
 
-const MATRIX_FEATURES = [
-  { feature: 'AI Blueprint Refinements', free: '3 / month', pro: 'Unlimited', ent: 'Unlimited + Priority AI' },
-  { feature: 'Docker Compose Auto-Stitching', free: 'Basic (Single DB)', pro: '✅ Multi-Container & Redis', ent: '✅ Custom Stacks & Clusters' },
-  { feature: 'Multi-Stage Build Optimizer', free: '❌ Standard', pro: '✅ Alpine & Layer Caching', ent: '✅ Micro-Image Size Scrubbing' },
-  { feature: 'Secret Shield & Masking', free: '❌ None', pro: 'Basic Masking', ent: '✅ Advanced API & JWT Scrubbing' },
-  { feature: 'CI/CD Pipeline Exports', free: '❌ None', pro: 'GitHub Actions', ent: '✅ GitHub Actions, GitLab, AWS' },
-  { feature: 'Digital Twin Security Audit', free: 'Overview Only', pro: '✅ Full Scan & Fixes', ent: '✅ Certified PDF Compliance Report' },
-  { feature: 'Support Level', free: 'Community Forum', pro: 'Priority Email', ent: 'Dedicated 24/7 Slack Channel' },
-];
 
 export default function PricingPage({ session }) {
   const [billingCycle, setBillingCycle] = useState('monthly'); // 'monthly' | 'yearly'
@@ -518,37 +509,6 @@ export default function PricingPage({ session }) {
             {loadingPlan === 'credit_pack' ? 'Loading...' : 'Buy 15 Credits (₹299)'}
           </button>
         </div>
-
-        {/* Feature Comparison Matrix Section */}
-        <section style={{ marginBottom: '64px' }}>
-          <div style={{ textAlign: 'center', marginBottom: '32px' }}>
-            <h2 style={{ fontSize: '2rem', fontWeight: '800', color: 'var(--color-text-primary)' }}>Detailed Plan Matrix</h2>
-            <p style={{ color: 'var(--color-text-muted)', fontSize: '15px', marginTop: '6px' }}>Compare technical features across all AutoDock tiers</p>
-          </div>
-
-          <div style={{ overflowX: 'auto', background: 'var(--gradient-card)', border: '1px solid var(--color-border)', borderRadius: 'var(--radius-lg)' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '14px' }}>
-              <thead>
-                <tr style={{ borderBottom: '1px solid var(--color-border)', background: 'var(--color-surface)' }}>
-                  <th style={{ padding: '16px 24px', color: 'var(--color-text-muted)' }}>Feature & Capability</th>
-                  <th style={{ padding: '16px 20px', color: 'var(--color-text-primary)' }}>Developer Free</th>
-                  <th style={{ padding: '16px 20px', color: 'var(--color-primary)' }}>Pro Builder</th>
-                  <th style={{ padding: '16px 20px', color: '#b48ead' }}>Enterprise Studio</th>
-                </tr>
-              </thead>
-              <tbody>
-                {MATRIX_FEATURES.map((row, idx) => (
-                  <tr key={idx} style={{ borderBottom: idx === MATRIX_FEATURES.length - 1 ? 'none' : '1px solid var(--color-border)' }}>
-                    <td style={{ padding: '16px 24px', fontWeight: '600', color: 'var(--color-text-primary)' }}>{row.feature}</td>
-                    <td style={{ padding: '16px 20px', color: 'var(--color-text-muted)' }}>{row.free}</td>
-                    <td style={{ padding: '16px 20px', color: 'var(--color-primary)', fontWeight: '600' }}>{row.pro}</td>
-                    <td style={{ padding: '16px 20px', color: '#b48ead', fontWeight: '600' }}>{row.ent}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </section>
 
         {/* Frequently Asked Questions (FAQ Accordion) */}
         <section style={{ maxWidth: '840px', margin: '0 auto 64px' }}>
