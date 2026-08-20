@@ -16,6 +16,7 @@ export default function Sidebar({ session, activePath }) {
     { href: '/security', label: 'Security' },
     { href: '/history', label: 'History' },
     { href: '/docs', label: 'Docs' },
+    { href: '/pricing', label: 'Pricing 💳' },
   ];
 
   return (
