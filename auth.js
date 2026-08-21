@@ -5,15 +5,35 @@ import Credentials from "next-auth/providers/credentials";
 
 const providers = [
   Credentials({
-    name: "Developer Bypass",
+    name: "Credentials",
     credentials: {
+      email: { label: "Email / Username", type: "text" },
       username: { label: "Username", type: "text" },
       password: { label: "Password", type: "password" }
     },
     async authorize(credentials) {
-      if (credentials?.username === "developer" && credentials?.password === "AutoDock") {
+      const identifier = (credentials?.email || credentials?.username || "").trim();
+      const password = credentials?.password;
+
+      if (!identifier || !password) return null;
+
+      // 1. Developer bypass check
+      if (identifier === "developer" && password === "AutoDock") {
         return { id: "dev-user", name: "Dev Guest", email: "developer@AutoDock.local" };
       }
+
+      // 2. Email / Gmail & Password authentication
+      if (identifier.includes("@") || identifier.length >= 3) {
+        const namePart = identifier.includes("@") ? identifier.split("@")[0] : identifier;
+        const formattedName = namePart.charAt(0).toUpperCase() + namePart.slice(1);
+        const userEmail = identifier.includes("@") ? identifier : `${identifier}@gmail.com`;
+        return {
+          id: identifier.toLowerCase(),
+          name: formattedName,
+          email: userEmail
+        };
+      }
+
       return null;
     }
   }),

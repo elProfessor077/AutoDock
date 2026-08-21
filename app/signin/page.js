@@ -17,9 +17,9 @@ export default function SignInPage() {
     await signIn("github", { redirectTo: "/" });
   };
 
-  const handleCredentialsSignIn = async (username, password) => {
+  const handleCredentialsSignIn = async (emailOrUsername, password) => {
     "use server";
-    await signIn("credentials", { username, password, redirectTo: "/" });
+    await signIn("credentials", { email: emailOrUsername, username: emailOrUsername, password, redirectTo: "/" });
   };
 
   return (

@@ -65,6 +65,11 @@ export default function AutoDockApp({ session }) {
     }
   }, [status, downloadUrl]);
 
+  // Scroll to top on mount
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   // Clean up URL on unmount
   useEffect(() => {
     return () => {
@@ -242,11 +247,10 @@ export default function AutoDockApp({ session }) {
       {/* Main Content Layout Area */}
       <div className="main-content-layout">
         <main className="app-container" id="main-content">
-          <HeroSection />
 
           <div className="dashboard-grid">
             {/* left: file upload panel */}
-            <div className="glass-card">
+            <div className="glass-card" id="zip-uploader">
               <h3 className="card-title">📦 Workspace Dropzone</h3>
               <p style={{ fontSize: '13px', color: 'var(--color-text-secondary)', marginBottom: '20px' }}>
                 Drop your workspace repository zip. AutoDock processes manifests securely.

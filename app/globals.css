@@ -56,6 +56,10 @@
   --dropzone-bg: rgba(11, 15, 25, 0.5);
   --sidebar-bg: linear-gradient(180deg, #0d1322 0%, #131b2e 100%);
   --badge-bg: rgba(255, 255, 255, 0.04);
+  --card-glow: rgba(136, 192, 208, 0.15);
+  --card-accent: #88c0d0;
+  --eco-color: #88c0d0;
+  --badge-color: #88c0d0;
 }
 
 /* ── Light Theme Variables ─────────────────────────────────────────────────── */
@@ -88,6 +92,10 @@
   --dropzone-bg: rgba(241, 245, 249, 0.7);
   --sidebar-bg: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
   --badge-bg: rgba(15, 23, 42, 0.04);
+  --card-glow: rgba(2, 132, 199, 0.12);
+  --card-accent: #0284c7;
+  --eco-color: #0284c7;
+  --badge-color: #0284c7;
 }
 
 html {
@@ -1997,16 +2005,16 @@ body::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at top left, var(--card-glow) 0%, transparent 60%);
+  background: radial-gradient(ellipse at top left, var(--card-glow, var(--color-primary-glow)) 0%, transparent 60%);
   pointer-events: none;
   opacity: 0;
   transition: opacity var(--transition-normal);
 }
 
 .home-action-card:hover {
-  border-color: var(--card-accent);
+  border-color: var(--card-accent, var(--color-primary));
   transform: translateY(-4px);
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25), 0 0 20px var(--card-glow);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25), 0 0 20px var(--card-glow, var(--color-primary-glow));
 }
 
 .home-action-card:hover::before {
@@ -2027,9 +2035,9 @@ body::before {
 }
 
 .home-action-card:hover .home-action-icon-wrap {
-  background: var(--card-glow);
-  border-color: var(--card-accent);
-  box-shadow: 0 0 15px var(--card-glow);
+  background: var(--card-glow, var(--color-primary-glow));
+  border-color: var(--card-accent, var(--color-primary));
+  box-shadow: 0 0 15px var(--card-glow, var(--color-primary-glow));
   transform: scale(1.08);
 }
 
@@ -2052,7 +2060,7 @@ body::before {
 }
 
 .home-action-card:hover .home-action-title {
-  color: var(--card-accent);
+  color: var(--card-accent, var(--color-primary));
 }
 
 .home-action-desc {
@@ -2070,7 +2078,7 @@ body::before {
 }
 
 .home-action-card:hover .home-action-arrow {
-  color: var(--card-accent);
+  color: var(--card-accent, var(--color-primary));
   transform: translateX(4px);
 }
 
@@ -2115,9 +2123,9 @@ body::before {
 }
 
 .home-ecosystem-chip:hover {
-  border-color: var(--eco-color);
+  border-color: var(--eco-color, var(--color-primary));
   transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2), 0 0 12px color-mix(in srgb, var(--eco-color) 20%, transparent);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2), 0 0 12px color-mix(in srgb, var(--eco-color, var(--color-primary)) 20%, transparent);
 }
 
 .home-ecosystem-glow {
@@ -2127,10 +2135,10 @@ body::before {
   transform: translateX(-50%);
   width: 80%;
   height: 2px;
-  background: var(--eco-color);
+  background: var(--eco-color, var(--color-primary));
   opacity: 0;
   transition: opacity var(--transition-normal);
-  box-shadow: 0 0 12px var(--eco-color);
+  box-shadow: 0 0 12px var(--eco-color, var(--color-primary));
 }
 
 .home-ecosystem-chip:hover .home-ecosystem-glow {
@@ -3546,7 +3554,7 @@ body::before {
 }
 .tech-strip-badge:hover {
   border-color: var(--badge-color, var(--color-border-hover));
-  box-shadow: 0 0 10px color-mix(in srgb, var(--badge-color, transparent) 25%, transparent);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--badge-color, var(--color-primary)) 25%, transparent);
   transform: translateY(-1px);
 }
 .tech-strip-icon {

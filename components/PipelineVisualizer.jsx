@@ -61,7 +61,7 @@ const STAGE_LOGS = {
 
 export default function PipelineVisualizer({ currentState }) {
   const [logs, setLogs] = useState([]);
-  const terminalEndRef = useRef(null);
+  const terminalBodyRef = useRef(null);
 
   // Get index of the current active step
   const getActiveStepIndex = () => {
@@ -98,12 +98,12 @@ export default function PipelineVisualizer({ currentState }) {
     }
   }, [currentState]);
 
-  // Scroll to bottom of terminal
+  // Scroll only the terminal body container internally when logs change (never scroll the main window)
   useEffect(() => {
-    if (terminalEndRef.current) {
-      terminalEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    if (terminalBodyRef.current && currentState !== 'idle') {
+      terminalBodyRef.current.scrollTop = terminalBodyRef.current.scrollHeight;
     }
-  }, [logs]);
+  }, [logs, currentState]);
 
   // Get connection line progress percentage
   const getConnectionLinePercentage = () => {
@@ -165,7 +165,7 @@ export default function PipelineVisualizer({ currentState }) {
           <span style={{ width: '42px' }} />
         </div>
         
-        <div className="terminal-body">
+        <div className="terminal-body" ref={terminalBodyRef}>
           {logs.map((log, index) => (
             <div key={index} className={`terminal-log-line ${log.type}`}>
               {log.text}
@@ -174,7 +174,6 @@ export default function PipelineVisualizer({ currentState }) {
           <div className="terminal-cursor-line">
             <span className="terminal-cursor" />
           </div>
-          <div ref={terminalEndRef} />
         </div>
       </div>
     </div>

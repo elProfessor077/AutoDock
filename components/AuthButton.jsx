@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { useTheme } from './ThemeProvider';
+import { handleSignOut } from '@/app/actions/auth';
 
 export default function AuthButton({ session }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -115,12 +116,19 @@ export default function AuthButton({ session }) {
 
           {/* Sign Out / Sign In Action */}
           {session?.user ? (
-            <form action="/api/auth/signout" method="POST">
-              <button type="submit" className="user-dropdown-item dropdown-btn-item signout-item">
-                <span className="dropdown-icon">🚪</span>
-                <span>Sign Out</span>
-              </button>
-            </form>
+            <button
+              type="button"
+              className="user-dropdown-item dropdown-btn-item signout-item"
+              style={{ width: '100%' }}
+              onClick={async () => {
+                setIsOpen(false);
+                await handleSignOut();
+                window.location.href = '/signin';
+              }}
+            >
+              <span className="dropdown-icon">🚪</span>
+              <span>Sign Out</span>
+            </button>
           ) : (
             <a href="/signin" className="user-dropdown-item dropdown-btn-item signin-item">
               <span className="dropdown-icon">🔑</span>
